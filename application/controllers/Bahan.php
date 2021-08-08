@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller
+class Bahan extends CI_Controller
 {
 
     /**
@@ -24,18 +24,12 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        $this->load->model('M_Pegawai');
     }
 
     public function index()
     {
-        if (($this->session->userdata('idJabatan') == 1) && ($this->session->userdata('status') == 'login')) {
-
-            $this->load->view('admin/v_DashboardAdmin');
-        } else if (($this->session->userdata('idJabatan') == 2) && ($this->session->userdata('status') == 'login')) {
-
-            $this->load->view('supervisor/v_DashboardSv');
-        } else {
-            redirect('Login');
-        }
+        $data['bahan'] = $this->M_Pegawai->getAllPegawai();
+        $this->load->view('admin/v_dataBahan', $data);
     }
 }
