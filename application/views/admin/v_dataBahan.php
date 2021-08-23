@@ -21,7 +21,7 @@ $this->load->view('parts/header');
                         <div class="card">
                             <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="table-NamaPegawai" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="table-NamaPegawai" width="95%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -128,23 +128,9 @@ $this->load->view('parts/header');
                 $(document).ready(function() {
                     var status;
                     $('#table-NamaPegawai').DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [{
-                                extend: 'copy',
-                                className: 'btn btn-primary'
-                            },
-                            {
-                                extend: 'excel',
-                                className: 'btn btn-primary'
-                            },
-                            {
-                                extend: 'csv',
-                                className: 'btn btn-primary'
-                            },
-                            {
-                                extend: 'pdf',
-                                className: 'btn btn-primary'
-                            },
+                        ddom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'excel', 'pdf', 'print'
                         ]
 
                     });

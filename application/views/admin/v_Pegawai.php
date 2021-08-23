@@ -19,44 +19,50 @@ $this->load->view('parts/header');
                 <section class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="table-NamaPegawai" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>ID Pegawai</th>
-                                            <th>ID Jabatan</th>
-                                            <th>Nama Pegawai</th>
-                                            <th>Alamat</th>
-                                            <th>Tanggal Lahir</th>
-                                            <th>Nomor Telp</th>
-                                            <th>Tools</th>
-
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <?php
-                                        $no = 1;
-                                        foreach ($NamaPegawai as $data) { ?>
+                            <!-- <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Data Pegawai </h6>
+                                <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
+                            </div> -->
+                            <div class="card-body">
+                                <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
+                                <div class="table-responsive" style="margin-top: 30px;">
+                                    <table class="table table-bordered" id="table-NamaPegawai" width="100%" cellspacing="0">
+                                        <thead>
                                             <tr>
-                                                <td><?php echo $no++; ?></td>
-                                                <td><?php echo $data['id_pegawai'] ?></td>
-                                                <td><?php echo $data['id_jabatan'] ?></td>
-                                                <td><?php echo $data['NamaPegawai'] ?></td>
-                                                <td><?php echo $data['alamatPegawai'] ?></td>
-                                                <td><?php echo $data['tgl_lahir'] ?></td>
-                                                <td><?php echo $data['nomorTelp'] ?></td>
-                                                <td>
-                                                    <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
-                                                    <a href="javascript:void(0)" class="btn btn-danger btn-delete"><i class="fa fa-trash-alt"></i></a>
-                                                </td>
+                                                <th>No.</th>
+                                                <th>ID Pegawai</th>
+                                                <th>ID Jabatan</th>
+                                                <th>Nama Pegawai</th>
+                                                <th>Alamat</th>
+                                                <th>Tanggal Lahir</th>
+                                                <th>Nomor Telp</th>
+                                                <th>Tools</th>
 
                                             </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                            <?php
+                                            $no = 1;
+                                            foreach ($NamaPegawai as $data) { ?>
+                                                <tr>
+                                                    <td><?php echo $no++; ?></td>
+                                                    <td><?php echo $data['id_pegawai'] ?></td>
+                                                    <td><?php echo $data['id_jabatan'] ?></td>
+                                                    <td><?php echo $data['NamaPegawai'] ?></td>
+                                                    <td><?php echo $data['alamatPegawai'] ?></td>
+                                                    <td><?php echo $data['tgl_lahir'] ?></td>
+                                                    <td><?php echo $data['nomorTelp'] ?></td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
+
+                                                    </td>
+
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,7 +161,7 @@ $this->load->view('parts/header');
             $(document).ready(function() {
                 var status;
                 $('#table-NamaPegawai').DataTable({
-                    dom: 'Bfrtip',
+                    dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
                             className: 'btn btn-primary'
@@ -172,7 +178,7 @@ $this->load->view('parts/header');
                             extend: 'pdf',
                             className: 'btn btn-primary'
                         },
-                    ]
+                    ],
 
                 });
 
