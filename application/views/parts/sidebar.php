@@ -28,54 +28,45 @@
                     </a>
                     <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
                         <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
-                            <a href="<?php echo base_url('Pegawai') ?>">Kelola Pegawai</a>
+                            <a href="<?php echo base_url('Pegawai') ?>"><i class="fa-fw select-all fas"></i> Kelola Pegawai</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('Bahan'); ?>">
-                            <a href="<?= base_url('Bahan') ?>">Data Bahan Mentah</a>
+                            <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Data Bahan</a>
                         </li>
                     </ul>
                 </li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
+                        <i class="fa-fw select-all fas"></i>
                         <span>Kelola Inventory</span>
                     </a>
                     <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
                         <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
-                            <a href="<?php echo base_url('Pegawai') ?>">Barang Masuk</a>
+                            <a href="<?php echo base_url('Pegawai') ?>"><i class="fa-fw select-all fas"></i> Barang Masuk</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('Bahan'); ?>">
-                            <a href="<?= base_url('Bahan') ?>">Barang Keluar</a>
+                            <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Barang Keluar</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('Bahan'); ?>">
-                            <a href="<?= base_url('Bahan') ?>">Perhitungan Barang</a>
+                            <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Kalkulasi Bahan</a>
                         </li>
                     </ul>
                 </li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
+                        <i class="fa-fw select-all fas"></i>
                         <span>Laporan</span>
                     </a>
                     <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
                         <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
-                            <a href="<?php echo base_url('Pegawai') ?>">Rekap Absen</a>
+                            <a href="<?php echo base_url('Pegawai') ?>"><i class="fa-fw select-all fas"></i> Rekap Absen</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('Bahan'); ?>">
-                            <a href="<?= base_url('Bahan') ?>">Laporan</a>
+                            <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Laporan</a>
                         </li>
 
                     </ul>
                 </li>
-
-                <li class="sidebar-item">
-                    <a href="<?= base_url('Login/logout') ?>" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-
-
 
             </ul>
         </div>
