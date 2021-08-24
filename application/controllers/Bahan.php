@@ -25,11 +25,78 @@ class Bahan extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('M_Pegawai');
+        $this->load->model('M_Bahan');
     }
 
     public function index()
     {
-        $data['bahan'] = $this->M_Pegawai->getAllPegawai();
+        $data['bahan'] = $this->M_Bahan->getAllBahan();
         $this->load->view('admin/v_dataBahan', $data);
+    }
+
+    public function addBahan()
+    {
+
+        $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
+        $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
+        $this->form_validation->set_rules('sisa', 'Sisa Bahan', 'required');
+
+
+
+
+        if ($this->form_validation->run()) {
+
+            $data = array(
+                'KodeBahan' => $this->input->post('kodeBahan'),
+                'NamaBahan' => $this->input->post('namaBahan'),
+                'pcs' => $this->input->post('sisa')
+            );
+            $this->M_Bahan->insertBahan($data);
+        } else {
+            $json = array();
+            $json = array(
+
+                'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
+                'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
+                'sisa' => form_error('sisa', '<p class="mt-3 text-danger">', '</p>'),
+                'status' => 'invalid'
+
+            );
+
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($json));
+        }
+    }
+
+    public function editBahan($id)
+    {
+        $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
+        $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
+        $this->form_validation->set_rules('sisa', 'Sisa Bahan', 'required');
+
+
+        if ($this->form_validation->run()) {
+            $data = array(
+                'KodeBahan' => $this->input->post('kodeBahan'),
+                'NamaBahan' => $this->input->post('namaBahan'),
+                'pcs' => $this->input->post('sisa')
+            );
+            $this->M_Bahan->updateBahan($data, $id);
+        } else {
+            $json = array();
+            $json = array(
+                'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
+                'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
+                'sisa' => form_error('sisa', '<p class="mt-3 text-danger">', '</p>'),
+                'status' => 'invalid'
+            );
+
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($json));
+        }
+
+        // $insert = $this->M_Pegawai->insertGambar($name);
     }
 }

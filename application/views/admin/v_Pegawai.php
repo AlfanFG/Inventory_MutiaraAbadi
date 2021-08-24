@@ -13,7 +13,7 @@ $this->load->view('parts/header');
             </header>
 
             <div class="page-heading">
-                <h3>Profile Statistics</h3>
+                <h3>Data Pegawai</h3>
             </div>
             <div class="page-content">
                 <section class="row">
@@ -137,11 +137,6 @@ $this->load->view('parts/header');
                                 </div>
                         </div>
 
-
-
-
-
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success btn-ModalInsert" id="btn-save" name="tambah" value="Simpan">
@@ -220,14 +215,14 @@ $this->load->view('parts/header');
                             URL = "<?php echo site_url('Pegawai/addPegawai'); ?>";
 
                         } else {
-                            var id = $('#IdPegawai').val();
+                            var id = $('#id_pegawai').val();
                             URL = "<?php echo site_url() ?>Pegawai/editPegawai/" + id;
                         }
 
                         Swal.fire({
-                            title: 'Auto close alert!',
-                            text: 'I will close in 5 seconds.',
-                            timer: 2000,
+                            title: 'Sedang Proses',
+                            text: 'Tunggu Sebentar...',
+                            timer: 1000,
                             showConfirmButton: false,
                             onOpen: () => {
                                 Swal.showLoading()
@@ -251,30 +246,31 @@ $this->load->view('parts/header');
                                             });
                                             fstatus = '';
                                             Swal.fire({
-                                                    title: "Failed",
-                                                    text: "Data gagal dimasukan!",
-                                                    type: "error",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                },
-                                                function() {
-                                                    $('#tambah').modal('show');
-                                                });
+                                                title: "Failed",
+                                                text: "Data gagal dimasukan!",
+                                                type: "error",
+                                                confirmButtonClass: "btn-primary",
+                                                confirmButtonText: "Oke",
+                                                closeOnConfirm: true
+                                            }).then(function() {
+                                                $('#tambah').modal('show');
+                                            })
 
                                         } else {
 
                                             Swal.fire({
-                                                    title: "Success",
-                                                    text: "Data berhasil dimasukan!",
-                                                    type: "success",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                },
-                                                function() {
-                                                    window.location = "<?php echo base_url('Pegawai') ?>";
-                                                });
+                                                title: "Success",
+                                                text: "Data berhasil dimasukan!",
+                                                type: "success",
+                                                confirmButtonClass: "btn-primary",
+                                                confirmButtonText: "Oke",
+                                                closeOnConfirm: true
+                                            }).then(function() {
+                                                location.reload();
+                                            })
+                                            // function() {
+                                            //     location.reload();
+                                            // }
 
                                         }
                                     }
@@ -306,15 +302,19 @@ $this->load->view('parts/header');
                     $('#btn-save').val('Update');
                     var currentRow = $(this).closest("tr");
                     var IdPegawai = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-                    var namaPegawai = currentRow.find("td:eq(2)").text();
-                    var harga = currentRow.find("td:eq(3)").text();
-                    var stok = currentRow.find("td:eq(4)").text();
+                    var IdJabatan = currentRow.find("td:eq(2)").text();
+                    var namaPegawai = currentRow.find("td:eq(3)").text();
+                    var alamat = currentRow.find("td:eq(4)").text();
+                    var tglLahir = currentRow.find("td:eq(5)").text();
+                    var nomorTelp = currentRow.find("td:eq(6)").text();
 
                     $('#tambah').modal('show');
-                    $('#IdPegawai').val(IdPegawai);
-                    $('#namaPegawai').val(namaPegawai);
-                    $('#harga').val(harga);
-                    $('#stok').val(stok);
+                    $('#id_pegawai').val(IdPegawai);
+                    $('#id_jabatan').val(IdJabatan);
+                    $('#NamaPegawai').val(namaPegawai);
+                    $('#alamatPegawai').val(alamat);
+                    $('#tgl_lahir').val(tglLahir);
+                    $('#nomorTelp').val(nomorTelp);
 
                 });
 
