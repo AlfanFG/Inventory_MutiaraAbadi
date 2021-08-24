@@ -10,11 +10,11 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-menu">
+        <div class="sidebar-menu ">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item active ">
+                <li class="sidebar-item <?php echo active_link('Dashboard'); ?>">
                     <a href="<?= base_url('Dashboard') ?>" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
@@ -26,11 +26,11 @@
                         <i class="bi bi-stack"></i>
                         <span>Data Master</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
+                        <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
                             <a href="<?php echo base_url('Pegawai') ?>">Kelola Pegawai</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item <?php echo active_link('Bahan'); ?>">
                             <a href="<?= base_url('Bahan') ?>">Data Bahan Mentah</a>
                         </li>
                     </ul>
@@ -40,14 +40,14 @@
                         <i class="bi bi-stack"></i>
                         <span>Kelola Inventory</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
+                        <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
                             <a href="<?php echo base_url('Pegawai') ?>">Barang Masuk</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item <?php echo active_link('Bahan'); ?>">
                             <a href="<?= base_url('Bahan') ?>">Barang Keluar</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item <?php echo active_link('Bahan'); ?>">
                             <a href="<?= base_url('Bahan') ?>">Perhitungan Barang</a>
                         </li>
                     </ul>
@@ -57,11 +57,11 @@
                         <i class="bi bi-stack"></i>
                         <span>Laporan</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
+                    <ul class="submenu <?php echo active_link($this->uri->segment(1))  ?>">
+                        <li class="submenu-item <?php echo active_link('Pegawai'); ?>">
                             <a href="<?php echo base_url('Pegawai') ?>">Rekap Absen</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item <?php echo active_link('Bahan'); ?>">
                             <a href="<?= base_url('Bahan') ?>">Laporan</a>
                         </li>
 
@@ -82,3 +82,6 @@
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
     </div>
 </div>
+<script>
+
+</script>

@@ -8,6 +8,7 @@ class Pegawai extends CI_Controller
         parent::__construct();
         $this->load->model('M_Pegawai');
         $this->load->library('form_validation');
+        $this->load->helper('nav');
     }
 
     public function index()
@@ -17,8 +18,8 @@ class Pegawai extends CI_Controller
         // if ($this->session->userdata('hakAkses') == '1' && $this->session->userdata('status') == 'login') {
         //     redirect('Login');
         // } else if ($this->session->userdata('hakAkses') == '2' && $this->session->userdata('status') == 'login') {
-           
-            
+
+
         // } else {
         //     redirect('Login');
         // }

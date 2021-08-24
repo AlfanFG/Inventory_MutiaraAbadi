@@ -38,20 +38,22 @@ class Login extends CI_Controller
 
         $user = $this->db->get_where('user', ['username' => $username])->row_array();
         $pegawai = $this->db->get_where('pegawai', ['id_pegawai' => $user['id_pegawai']])->row_array();
+        $jabatan = $this->db->get_where('jabatan', ['id_jabatan' => $pegawai['id_jabatan']])->row_array();
 
         // User available
         if ($user) {
-
+            print_r($pegawai);
             // Password Match
             if (($password == $user['password'])) {
                 $data = [
 
                     'idJabatan' => $pegawai['id_jabatan'],
                     'idpegawai' => $pegawai['id_pegawai'],
-                    'Nama' => $pegawai['namaPegawai'],
+                    'Nama' => $pegawai['NamaPegawai'],
                     'tglLahir' => $pegawai['tgl_lahir'],
                     'Alamat' => $pegawai['alamatPegawai'],
                     'noTelp' => $pegawai['nomorTelp'],
+                    'jabatan' => $jabatan['jabatan'],
                     'status' => 'login'
                 ];
                 $this->session->set_userdata($data);

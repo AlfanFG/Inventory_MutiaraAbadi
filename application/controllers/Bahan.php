@@ -24,12 +24,14 @@ class Bahan extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+
         $this->load->model('M_Pegawai');
         $this->load->model('M_Bahan');
     }
 
     public function index()
     {
+        $this->load->helper('nav');
         $data['bahan'] = $this->M_Bahan->getAllBahan();
         $this->load->view('admin/v_dataBahan', $data);
     }
