@@ -50,7 +50,7 @@ $this->load->view('parts/header');
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
-                                                <img src="assets/images/faces/1.jpg">
+                                                <img src="<?= base_url('') ?>assets/images/faces/1.jpg">
                                             </div>
                                         </div>
                                     </div>
@@ -80,13 +80,13 @@ $this->load->view('parts/header');
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Data Pegawai</h3>
+                                <h3>Data Barang Masuk</h3>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?= base_url('Dashboard') ?>">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data Pegawai
+                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Masuk
                                         </li>
                                     </ol>
                                 </nav>
@@ -102,18 +102,18 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
+                                <a href="<?= base_url('BarangMasuk/viewTambah') ?>" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-NamaPegawai" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="table-barangMasuk" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>ID Pegawai</th>
-
-                                                <th>Nama Pegawai</th>
-                                                <th>Alamat</th>
-                                                <th>Tanggal Lahir</th>
-                                                <th>Nomor Telp</th>
+                                                <th>No. Surat Jalan</th>
+                                                <th>supplier</th>
+                                                <th>Kode Barang</th>
+                                                <th>Tanggal Masuk</th>
+                                                <th>Yard</th>
+                                                <th>Foto Surat Julan</th>
                                                 <th>Tools</th>
 
                                             </tr>
@@ -122,15 +122,15 @@ $this->load->view('parts/header');
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($NamaPegawai as $data) { ?>
+                                            foreach ($barangMasuk as $data) { ?>
                                                 <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $data['id_pegawai'] ?></td>
-
-                                                    <td><?php echo $data['NamaPegawai'] ?></td>
-                                                    <td><?php echo $data['alamatPegawai'] ?></td>
-                                                    <td><?php echo $data['tgl_lahir'] ?></td>
-                                                    <td><?php echo $data['nomorTelp'] ?></td>
+                                                    <td><?= $no++; ?></td>
+                                                    <td><?= $data['noSuratJalan'] ?></td>
+                                                    <td><?= $data['supplier'] ?></td>
+                                                    <td><?= $data['kodeBarang'] ?></td>
+                                                    <td><?= $data['tanggalMasuk'] ?></td>
+                                                    <td><?= $data['yard'] ?></td>
+                                                    <td><?= $data['fotoSuratJalan'] ?></td>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
 
@@ -148,16 +148,18 @@ $this->load->view('parts/header');
             </div>
 
             <?php
-            $id = $this->M_Pegawai->id_pegawai();
+            $noSurat = $this->M_BarangMasuk->getNoSuratJalan();
             ?>
             <!-- modal tambah -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Form Tambah Pegawai</h4>
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title white" id="myModalLabel160">
+                                Primary Modal
+                            </h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <i data-feather="x">&times;</i>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -165,15 +167,15 @@ $this->load->view('parts/header');
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">ID Pegawai</label>
-                                            <input type="text" name="id_pegawai" id="id_pegawai" value="<?php echo $id ?>" class="form-control" required>
+                                            <label class="control-label">No. Surat Jalan</label>
+                                            <input type="text" name="noSurat" id="noSurat" value="<?php echo $noSurat ?>" class="form-control" required readonly>
                                             <div class="error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">ID jabatan</label>
-                                            <input type="text" name="id_jabatan" id="id_jabatan" class="form-control">
+                                            <label class="control-label">Kode Barang</label>
+                                            <input type="text" name="kodeBarang" id="kodeBarang" class="form-control">
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -183,20 +185,20 @@ $this->load->view('parts/header');
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Nama Pegawai</label>
-                                            <input type="text" name="NamaPegawai" id="NamaPegawai" class="form-control">
+                                            <label class="control-label">Tanggal Masuk</label>
+                                            <input type="text" name="tanggalMasuk" id="tanggalMasuk" class="form-control">
                                             <div class="error" style="font-size: medium; width:500px"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Alamat Pegawai</label>
-                                            <input type="text" name="alamatPegawai" id="alamatPegawai" class="form-control">
+                                            <label class="control-label">Yard</label>
+                                            <input type="text" name="yard" id="yard" class="form-control">
                                             <div class="error" style="font-size: medium; width:500px"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Tanggal Lahir</label>
@@ -212,12 +214,15 @@ $this->load->view('parts/header');
                                             <div class="error" style="font-size: medium; width:500px"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-success btn-ModalInsert" id="btn-save" name="tambah" value="Simpan">
+                            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Close</span>
+                            </button>
+                            <input type="submit" class="btn btn-primary btn-ModalInsert" id="btn-save" name="tambah" value="Simpan">
                         </div>
                         </form>
                     </div>
@@ -233,9 +238,7 @@ $this->load->view('parts/header');
         <script>
             $(document).ready(function() {
                 var status;
-                // let table1 = document.querySelector('#table-NamaPegawai');
-                // let dataTable = new simpleDatatables.DataTable(table1);
-                $('#table-NamaPegawai').DataTable({
+                $('#table-barangMasuk').DataTable({
                     dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
@@ -279,103 +282,107 @@ $this->load->view('parts/header');
                         confirmButtonText: "Yes",
                         cancelButtonText: "No",
                         closeOnConfirm: false,
-                        closeOnCancel: false
-                    }).then(function() {
+                        closeOnCancel: false,
+
+                    }).then(result => {
+                        if (result.value == true) {
+
+
+                            // console.log(value.value);
 
 
 
+                            $('#tambah').modal('hide');
 
-                        $('#tambah').modal('hide');
 
+                            var fd;
+                            var files;
+                            var URL;
+                            if ($('#btn-save').val() == 'Save') {
+                                URL = "<?php echo site_url('Pegawai/addPegawai'); ?>";
 
-                        var fd;
-                        var files;
-                        var URL;
-                        if ($('#btn-save').val() == 'Save') {
-                            URL = "<?php echo site_url('Pegawai/addPegawai'); ?>";
-
-                        } else {
-                            var id = $('#id_pegawai').val();
-                            URL = "<?php echo site_url() ?>Pegawai/editPegawai/" + id;
-                        }
-
-                        Swal.fire({
-                            title: 'Sedang Proses',
-                            text: 'Tunggu Sebentar...',
-                            timer: 1000,
-                            showConfirmButton: false,
-                            onOpen: () => {
-                                Swal.showLoading()
+                            } else {
+                                var id = $('#id_pegawai').val();
+                                URL = "<?php echo site_url() ?>Pegawai/editPegawai/" + id;
                             }
-                        }).then(
-                            function() {
-                                $.ajax({
-                                    ///nambah url
-                                    url: URL,
-                                    method: "POST",
-                                    data: $('#form-NamaPegawai').serializeArray(),
-                                    success: function(data) {
 
-                                        var status = false;
-                                        if (data.status == 'invalid') {
-                                            swal.showLoading();
-                                            $.each(data, function(key, value) {
-                                                //alert(value);
-                                                $('#' + key).parents('.form-group').find('.error').html(value);
-
-                                            });
-                                            fstatus = '';
-                                            Swal.fire({
-                                                title: "Failed",
-                                                text: "Data gagal dimasukan!",
-                                                type: "error",
-                                                confirmButtonClass: "btn-primary",
-                                                confirmButtonText: "Oke",
-                                                closeOnConfirm: true
-                                            }).then(function() {
-                                                $('#tambah').modal('show');
-                                            })
-
-                                        } else {
-
-                                            Swal.fire({
-                                                title: "Success",
-                                                text: "Data berhasil dimasukan!",
-                                                type: "success",
-                                                confirmButtonClass: "btn-primary",
-                                                confirmButtonText: "Oke",
-                                                closeOnConfirm: true
-                                            }).then(function() {
-                                                location.reload();
-                                            })
-                                            // function() {
-                                            //     location.reload();
-                                            // }
-
-                                        }
-                                    }
-                                });
-
-                            },
-                            // handling the promise rejection
-                            function(dismiss) {
-                                if (dismiss === 'timer') {
-                                    console.log('I was closed by the timer')
+                            Swal.fire({
+                                title: 'Sedang Proses',
+                                text: 'Tunggu Sebentar...',
+                                timer: 1000,
+                                showConfirmButton: false,
+                                onOpen: () => {
+                                    Swal.showLoading()
                                 }
-                            }
-                        )
-                    }, function(dismiss) {
-                        if (dismiss === 'cancel') {
-                            swal(
+                            }).then(
+                                function() {
+                                    $.ajax({
+                                        ///nambah url
+                                        url: URL,
+                                        method: "POST",
+                                        data: $('#form-NamaPegawai').serializeArray(),
+                                        success: function(data) {
+
+                                            var status = false;
+                                            if (data.status == 'invalid') {
+                                                swal.showLoading();
+                                                $.each(data, function(key, value) {
+                                                    //alert(value);
+                                                    $('#' + key).parents('.form-group').find('.error').html(value);
+
+                                                });
+                                                fstatus = '';
+                                                Swal.fire({
+                                                    title: "Failed",
+                                                    text: "Data gagal dimasukan!",
+                                                    type: "error",
+                                                    confirmButtonClass: "btn-primary",
+                                                    confirmButtonText: "Oke",
+                                                    closeOnConfirm: true
+                                                }).then(function() {
+                                                    $('#tambah').modal('show');
+                                                })
+
+                                            } else {
+
+                                                Swal.fire({
+                                                    title: "Success",
+                                                    text: "Data berhasil dimasukan!",
+                                                    type: "success",
+                                                    confirmButtonClass: "btn-primary",
+                                                    confirmButtonText: "Oke",
+                                                    closeOnConfirm: true
+                                                }).then(function() {
+                                                    location.reload();
+                                                })
+                                                // function() {
+                                                //     location.reload();
+                                                // }
+
+                                            }
+                                        }
+                                    });
+
+                                },
+                                // handling the promise rejection
+                                function(dismiss) {
+                                    if (dismiss === 'timer') {
+                                        console.log('I was closed by the timer')
+                                    }
+                                }
+                            )
+                        } else {
+                            Swal.fire(
                                 'Cancelled',
                                 '',
                                 'error'
                             )
                         }
+
                     });
                 });
 
-                $("#table-NamaPegawai").on('click', '.btn-edit', function() {
+                $("#table-barangMasuk").on('click', '.btn-edit', function() {
                     // get the current row
                     $('.error').html('');
                     fstatus = 'update';
@@ -398,7 +405,7 @@ $this->load->view('parts/header');
 
                 });
 
-                $("#table-NamaPegawai").on('click', '.btn-delete', function() {
+                $("#table-barangMasuk").on('click', '.btn-delete', function() {
                     // get the current row
 
 

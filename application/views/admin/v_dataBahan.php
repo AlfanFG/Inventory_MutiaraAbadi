@@ -104,15 +104,16 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
-                                <div class="table-responsive" style="margin-top: 30px;">
-                                    <table class="table table-bordered" id="table-bahan" width="100%" cellspacing="0">
+                                <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Bahan</span></a>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-bahan" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Kode Bahan</th>
                                                 <th>Nama Bahan</th>
-                                                <th>pcs</th>
+                                                <!-- <th>Harga</th> -->
+                                                <th>Banyak</th>
                                                 <th>Tools</th>
 
                                             </tr>
@@ -126,8 +127,8 @@ $this->load->view('parts/header');
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $data['KodeBahan'] ?></td>
                                                     <td><?php echo $data['NamaBahan'] ?></td>
-                                                    <td><?php echo $data['pcs'] ?></td>
-
+                                                    <!-- <td><?php echo $data['harga/yard'] ?></td> -->
+                                                    <td><?php echo $data['banyak'] ?></td>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
 
@@ -149,44 +150,49 @@ $this->load->view('parts/header');
             ?>
             <!-- modal tambah -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-sm-4">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title">Form Tambah Bahan</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <form method="post" id="form-bahan">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Kode Bahan</label>
                                             <input type="text" name="kodeBahan" id="kodeBahan" value="<?php echo $id ?>" class="form-control" required>
                                             <div class="error"></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Nama Bahan</label>
                                             <input type="text" name="namaBahan" id="namaBahan" class="form-control">
                                             <div class="error"></div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="row">
-
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Sisa</label>
-                                            <input type="text" name="sisa" id="sisa" class="form-control">
+                                            <label class="control-label">Harga/yard</label>
+                                            <input type="text" name="harga" id="harga" class="form-control">
                                             <div class="error" style="font-size: medium; width:500px"></div>
                                         </div>
                                     </div>
 
                                 </div>
+                                <!-- <div class="row">
+
+                                    
+
+                                </div> -->
 
                         </div>
 
@@ -196,7 +202,7 @@ $this->load->view('parts/header');
 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success btn-ModalInsert" id="btn-save" name="tambah" value="Simpan">
                         </div>
                         </form>
@@ -359,12 +365,12 @@ $this->load->view('parts/header');
                     var currentRow = $(this).closest("tr");
                     var kodeBahan = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
                     var namaBahan = currentRow.find("td:eq(2)").text();
-                    var sisa = currentRow.find("td:eq(3)").text();
+                    var harga = currentRow.find("td:eq(3)").text();
 
                     $('#tambah').modal('show');
                     $('#kodeBahan').val(kodeBahan);
                     $('#namaBahan').val(namaBahan);
-                    $('#sisa').val(sisa);
+                    $('#harga').val(harga);
 
                 });
 

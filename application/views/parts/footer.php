@@ -11,15 +11,15 @@
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-<script src="<?= base_url('') ?>assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?= base_url('') ?>assets/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="<?= base_url('') ?>assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
 
 
-<!-- <script src="<?= base_url('') ?>assets/js/pages/dashboard.js"></script> -->
+<script src="<?= base_url('') ?>assets/js/pages/dashboard.js"></script>
 
 <script src="<?= base_url('') ?>assets/js/main.js"></script>
 
