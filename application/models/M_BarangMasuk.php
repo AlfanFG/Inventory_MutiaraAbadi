@@ -7,10 +7,26 @@ class M_BarangMasuk extends CI_Model
         return $this->db->get('barang_masuk')->result_array();
     }
 
+    function getDetailBarangMasuk($id)
+    {
+        $query = $this->db->query("SELECT * FROM detail_barang_masuk WHERE noSuratJalan = '$id'");
+        $data = $query->result_array();
+
+        return $data;
+    }
+
     public function getKodeNamaBarang($term)
     {
         $query = $this->db->query("SELECT NamaBahan, KodeBahan FROM bahan WHERE NamaBahan like '%" . $term . "%' OR KodeBahan like '%" . $term . "%'");
         $data = $query->result();
+
+        return $data;
+    }
+
+    public function getBarangMasukById($id)
+    {
+        $query = $this->db->query("SELECT noSuratJalan, supplier, tanggalMasuk, total FROM barang_masuk WHERE noSuratJalan = '$id'");
+        $data = $query->result_array();
 
         return $data;
     }
@@ -32,6 +48,11 @@ class M_BarangMasuk extends CI_Model
     }
 
     function insertBarangMasuk($data)
+    {
+        $this->db->insert('detail_barang_masuk', $data);
+    }
+
+    function insertSuratJalan($data)
     {
         $this->db->insert('barang_masuk', $data);
     }

@@ -102,34 +102,63 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <a href="<?= base_url('BarangMasuk/viewTambah') ?>" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-barangMasuk" width="100%" cellspacing="0">
+                                <div class="row">
+                                    <div class="col">
+                                        <?php foreach ($BarangMasuk as $brg) { ?>
+                                            <table width="100%">
+                                                <tr style="height: 50px;">
+                                                    <td>No Surat Jalan</td>
+                                                    <td>:</td>
+                                                    <td><?= $brg['noSuratJalan']; ?></td>
+                                                    <td>Tanggal Masuk</td>
+                                                    <td>:</td>
+                                                    <td><?= $brg['tanggalMasuk']; ?></td>
+                                                </tr>
+                                                <tr style="height: 50px;">
+                                                    <td>Supplier</td>
+                                                    <td>:</td>
+                                                    <td><?= $brg['supplier']; ?></td>
+                                                    <td><b>Total</b></td>
+                                                    <td>:</td>
+                                                    <td><b><?= $brg['total']; ?></b> </td>
+                                                </tr>
+                                                <!-- <tr style="height: 50px;">
+
+                                                </tr>
+                                                <tr style="height: 50px;">
+
+                                                </tr> -->
+                                            </table>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive" style="margin-top: 40px;">
+                                    <table class="table table-bordered" id="table-detBarangMasuk" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>No. Surat Jalan</th>
-                                                <th>Supplier</th>
-                                                <th>Tanggal Masuk</th>
-                                                <th>Total</th>
+                                                <th>Kode Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Banyak</th>
+                                                <th>Rincian</th>
                                                 <th>Tools</th>
-
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($barangMasuk as $data) { ?>
+                                            foreach ($detBarangMasuk as $data) { ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= $data['noSuratJalan'] ?></td>
-                                                    <td><?= $data['supplier'] ?></td>
-                                                    <td><?= $data['tanggalMasuk'] ?></td>
-                                                    <td><?= $data['total'] ?></td>
+                                                    <td><?= $data['kodeBarang'] ?></td>
+                                                    <td width="300"><?= $data['namaBarang'] ?></td>
+                                                    <td><?= $data['banyak'] ?></td>
+                                                    <td><?= $data['rincian'] ?></td>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="<?= base_url('BarangMasuk/detailBarangMasuk/' . $data['noSuratJalan']) ?>" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
+                                                        <a href="javascript:void(0)" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
                                                     </td>
 
                                                 </tr>
@@ -234,7 +263,7 @@ $this->load->view('parts/header');
         <script>
             $(document).ready(function() {
                 var status;
-                $('#table-barangMasuk').DataTable({
+                $('#table-detBarangMasuk').DataTable({
                     dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
@@ -378,7 +407,7 @@ $this->load->view('parts/header');
                     });
                 });
 
-                $("#table-barangMasuk").on('click', '.btn-edit', function() {
+                $("#table-detBarangMasuk").on('click', '.btn-edit', function() {
                     // get the current row
                     $('.error').html('');
                     fstatus = 'update';
@@ -401,7 +430,7 @@ $this->load->view('parts/header');
 
                 });
 
-                $("#table-barangMasuk").on('click', '.btn-delete', function() {
+                $("#table-detBarangMasuk").on('click', '.btn-delete', function() {
                     // get the current row
 
 

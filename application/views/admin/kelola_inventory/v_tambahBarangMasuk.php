@@ -103,7 +103,7 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a> -->
                             </div>
                             <div class="card-body">
-                                <form action="<?= base_url('BarangMasuk/addBarangMasuk') ?>" method="POST" style="margin-top: 40px">
+                                <form id="form-tambah" method="POST" enctype="multipart/form-data" style="margin-top: 40px">
                                     <!-- <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a> -->
                                     <div class="row">
                                         <div class="col-sm-3">
@@ -113,6 +113,7 @@ $this->load->view('parts/header');
                                             <div class="form-group">
                                                 <input type="text" id="noSurat" name="noSurat" class="form-control round" placeholder="Masukan No. Surat Jalan">
                                             </div>
+                                            <div class="error"></div>
                                         </div>
 
 
@@ -127,6 +128,7 @@ $this->load->view('parts/header');
                                             <div class="form-group">
                                                 <input type="text" id="supplier" name="supplier" class="form-control round" placeholder="Masukan Supplier">
                                             </div>
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
@@ -137,6 +139,7 @@ $this->load->view('parts/header');
                                             <div class="form-group">
                                                 <input type="date" id="tglMasuk" name="tglMasuk" class="form-control round">
                                             </div>
+                                            <div class="error"></div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
@@ -159,10 +162,10 @@ $this->load->view('parts/header');
                                                 <div class="col-sm-8 dynamic">
                                                     <div class="form-group add">
 
-                                                        <input type="text" id="barang[][name]" name="barang[][name]" class="form-control round barang" placeholder="Masukan Nama atau Kode Barang" required>
-
+                                                        <input type="text" id="barang1" name="barang[]" class="form-control round barang" placeholder="Masukan Nama atau Kode Barang" required>
 
                                                     </div>
+                                                    <div class="error"></div>
 
                                                 </div>
                                                 <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
@@ -181,20 +184,21 @@ $this->load->view('parts/header');
                                                 <div class="col-sm-4 dynamic">
                                                     <div class="form-group add">
 
-                                                        <input type="text" id="banyak[][name]" name="banyak[][name]" class="form-control round" placeholder="Banyak / yard" required>
+                                                        <input type="text" id="banyak1" name="banyak[]" class="form-control round" placeholder="Banyak / yard" required>
 
 
                                                     </div>
+                                                    <div class="error"></div>
 
                                                 </div>
                                                 <div class="col-sm-4 dynamic">
                                                     <div class="form-group add">
 
-                                                        <input type="text" id="rincian[][name]" name="rincian[][name]" class="form-control round" placeholder="Rincian Barang" required>
+                                                        <input type="text" id="rincian1" name="rincian[]" class="form-control round rincian" placeholder="Rincian Barang" required>
 
 
                                                     </div>
-
+                                                    <div class="error"></div>
                                                 </div>
                                                 <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
 
@@ -218,10 +222,10 @@ $this->load->view('parts/header');
                                     </div>
 
 
-
+                                    <input type="hidden" id="jumlah" name="jumlah">
                                     <div class="row" style="margin-top: 100px;">
                                         <hr>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <input type="submit" class="btn btn-primary" value="Simpan">
                                     </div>
                                 </form>
                             </div>
@@ -266,10 +270,11 @@ $this->load->view('parts/header');
                                             </div>
                                             <div class="col-sm-8 dynamic">
                                                 <div class="form-group add">
-                                                    <input type="text" id="barang[][name]" name="barang[][name]" class="form-control round barang" placeholder="Masukan Nama atau Kode Barang" required>
+                                                    <input type="text" id="barang` + i + `" name="barang[]" class="form-control round barang" placeholder="Masukan Nama atau Kode Barang" required>
 
 
                                                 </div>
+                                                <div class="error"></div>
 
                                             </div>
                                            
@@ -285,20 +290,20 @@ $this->load->view('parts/header');
                                             <div class="col-sm-4 dynamic">
                                                 <div class="form-group add">
                                                     
-                                                    <input type="text" id="banyak[][name]" name="banyak[][name]" class="form-control round" placeholder="Banyak / Yard" required>
+                                                    <input type="text" id="banyak` + i + `" name="banyak[]" class="form-control round" placeholder="Banyak / Yard" required>
 
 
                                                 </div>
-
+                                                <div class="error"></div>
                                             </div>
                                             <div class="col-sm-4 dynamic">
                                                 <div class="form-group add">
                                                     
-                                                    <input type="text" id="rincian[][name]" name="rincian[][name]" class="form-control round" placeholder="Rincian Barang" required>
+                                                    <input type="text" id="rincian` + i + `" name="rincian[]" class="form-control round rincian" placeholder="Rincian Barang" required>
 
 
                                                 </div>
-
+                                                <div class="error"></div>
                                             </div>
                                           
 
@@ -314,7 +319,7 @@ $this->load->view('parts/header');
 
                                             </div>
                                             </div>`);
-
+                    $('#jumlah').val(i);
                     $(".barang").on('change', '.barang', function() {
 
                     }).autocomplete({
@@ -325,9 +330,99 @@ $this->load->view('parts/header');
                     // $('.dynamic-del').append(`<div class="form-group add` + i + `">
                     //                         <button class="btn btn-danger btn-brg-delete"><i class="fas fa-minus-circle"></i></button>
                     //                     </div>`);
+                    console.log(i);
+                    $('#rincian' + i).on('keyup', function(e) {
+                        console.log('ewf');
+                        var bilangan = $('#rincian' + i).val().substring(3);
+                        var clean = bilangan.replace(/\D/g, '');
 
+                        const formatter = new Intl.NumberFormat('en-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(clean)
+                            .replace(/[IDR]/gi, '')
+                            .replace(/(\.+\d{2})/, '')
+                            .trimLeft()
+                        console.log(`Rp. ${formatter}` + i);
+                        $('#rincian' + i).val(`Rp. ${formatter}`);
+
+
+                    });
+
+                    // $('.rincian').on('keydown', function(event) {
+
+                    //     key = event.which || event.keyCode;
+                    //     if (key != 188 // Comma
+                    //         &&
+                    //         key != 8 // Backspace
+                    //         &&
+                    //         key != 17 && key != 86 & key != 67 // Ctrl c, ctrl v
+                    //         &&
+                    //         (key < 48 || key > 57) // Non digit
+                    //         // Dan masih banyak lagi seperti tombol del, panah kiri dan kanan, tombol tab, dll
+                    //     ) {
+                    //         event.preventDefault();
+                    //         return;
+                    //     }
+                    // });
+
+                    $('#rincian' + i).focus(function() {
+                        $('#rincian' + i).val('Rp. ');
+                    })
+
+                    $('#rincian' + i).focusout(function() {
+                        let isi = $('#rincian' + i).val();
+                        if (isi.substring(3, 1) != '') {
+                            $('#rincian' + i).attr('placeholder', 'Rincian Barang');
+                        } else
+                            $('#rincian' + i).val('');
+
+
+                    })
 
                 })
+
+
+
+                $('#rincian1').on('keyup', function(e) {
+
+                    var bilangan = $('#rincian1').val().substring(3);
+                    var clean = bilangan.replace(/\D/g, '');
+
+                    const formatter = new Intl.NumberFormat('en-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(clean)
+                        .replace(/[IDR]/gi, '')
+
+                        .replace(/(\.+\d{2})/, '')
+                        .replace(/,/g, '.')
+                        .trimLeft()
+                    console.log(`Rp. ${formatter}`);
+                    $('#rincian1').val(`Rp. ${formatter}`);
+
+
+                });
+
+                var input = document.getElementsByClassName('rincian');
+
+
+
+                $('#rincian1').focus(function() {
+                    $('#rincian1').val('Rp. ');
+                })
+
+                $('#rincian1').focusout(function() {
+                    let isi = $('#rincian' + i).val();
+                    console.log(isi.substring(3));
+                    if (isi.substring(3) != '') {
+                        $('#rincian1').val();
+                    } else {
+                        $('#rincian1').val('');
+                        $('#rincian1').attr('placeholder', 'Rincian Barang');
+                    }
+                })
+
                 $('div').on('click', '.del', function() {
                     let button_id = $(this).parent().attr('class');
 
@@ -346,110 +441,112 @@ $this->load->view('parts/header');
 
 
                 var status;
-                // $('#form-NamaPegawai').on('submit', function(e) {
-                //     e.preventDefault();
-                //     $('#tambah').modal('hide');
-                //     Swal.fire({
-                //         title: "Apakah anda yakin?",
-                //         text: "Anda akan mengakses data yang dicari",
-                //         type: "warning",
-                //         showCancelButton: true,
-                //         confirmButtonClass: "btn-primary",
-                //         confirmButtonText: "Yes",
-                //         cancelButtonText: "No",
-                //         closeOnConfirm: false,
-                //         closeOnCancel: false,
+                $('#form-tambah').on('submit', function(e) {
+                    e.preventDefault();
 
-                //     }).then(result => {
-                //         if (result.value == true) {
-                //             // console.log(value.value);
-                //             $('#tambah').modal('hide');
-                //             var fd;
-                //             var files;
-                //             var URL;
-                //             if ($('#btn-save').val() == 'Save') {
-                //                 URL = "<?php echo site_url('Pegawai/addPegawai'); ?>";
+                    $('#jumlah').val(i);
+                    var fd = new FormData();
+                    var data = $('#form-tambah').serializeArray();
 
-                //             } else {
-                //                 var id = $('#id_pegawai').val();
-                //                 URL = "<?php echo site_url() ?>Pegawai/editPegawai/" + id;
-                //             }
+                    $.each(data, function(key, input) {
+                        fd.append(input.name, input.value);
+                    });
 
-                //             Swal.fire({
-                //                 title: 'Sedang Proses',
-                //                 text: 'Tunggu Sebentar...',
-                //                 timer: 1000,
-                //                 showConfirmButton: false,
-                //                 onOpen: () => {
-                //                     Swal.showLoading()
-                //                 }
-                //             }).then(
-                //                 function() {
-                //                     $.ajax({
-                //                         ///nambah url
-                //                         url: URL,
-                //                         method: "POST",
-                //                         data: $('#form-NamaPegawai').serializeArray(),
-                //                         success: function(data) {
 
-                //                             var status = false;
-                //                             if (data.status == 'invalid') {
-                //                                 swal.showLoading();
-                //                                 $.each(data, function(key, value) {
-                //                                     //alert(value);
-                //                                     $('#' + key).parents('.form-group').find('.error').html(value);
+                    $('#tambah').modal('hide');
+                    Swal.fire({
+                        title: "Apakah anda yakin?",
+                        text: "Anda akan mengakses data yang dicari",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-primary",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
 
-                //                                 });
-                //                                 fstatus = '';
-                //                                 Swal.fire({
-                //                                     title: "Failed",
-                //                                     text: "Data gagal dimasukan!",
-                //                                     type: "error",
-                //                                     confirmButtonClass: "btn-primary",
-                //                                     confirmButtonText: "Oke",
-                //                                     closeOnConfirm: true
-                //                                 }).then(function() {
-                //                                     $('#tambah').modal('show');
-                //                                 })
+                    }).then(result => {
+                        if (result.value == true) {
+                            // console.log(value.value);
 
-                //                             } else {
+                            Swal.fire({
+                                title: 'Sedang Proses',
+                                text: 'Tunggu Sebentar...',
+                                timer: 1000,
+                                showConfirmButton: false,
+                                onOpen: () => {
+                                    Swal.showLoading()
+                                }
+                            }).then(
+                                function() {
+                                    for (var p of fd) {
+                                        console.log(p);
+                                    }
+                                    $.ajax({
+                                        ///nambah url
+                                        url: "<?php echo site_url('BarangMasuk/addBarangMasuk'); ?>",
+                                        method: "POST",
+                                        data: fd,
+                                        contentType: false,
+                                        processData: false,
+                                        success: function(data) {
+                                            console.log(data);
+                                            var status = false;
+                                            if (data.status == 'invalid') {
+                                                swal.showLoading();
+                                                $.each(data, function(key, value) {
+                                                    //alert(value);
+                                                    $('#' + key).parents('.form-group').find('.error').html(value);
 
-                //                                 Swal.fire({
-                //                                     title: "Success",
-                //                                     text: "Data berhasil dimasukan!",
-                //                                     type: "success",
-                //                                     confirmButtonClass: "btn-primary",
-                //                                     confirmButtonText: "Oke",
-                //                                     closeOnConfirm: true
-                //                                 }).then(function() {
-                //                                     location.reload();
-                //                                 })
-                //                                 // function() {
-                //                                 //     location.reload();
-                //                                 // }
+                                                });
+                                                fstatus = '';
+                                                Swal.fire({
+                                                    title: "Failed",
+                                                    text: "Data gagal dimasukan!",
+                                                    type: "error",
+                                                    confirmButtonClass: "btn-primary",
+                                                    confirmButtonText: "Oke",
+                                                    closeOnConfirm: true
+                                                })
+                                            } else {
 
-                //                             }
-                //                         }
-                //                     });
+                                                Swal.fire({
+                                                    title: "Success",
+                                                    text: "Data berhasil dimasukan!",
+                                                    type: "success",
+                                                    confirmButtonClass: "btn-primary",
+                                                    confirmButtonText: "Oke",
+                                                    closeOnConfirm: true
+                                                }).then(function() {
+                                                    window.location.href = "<?php echo base_url(); ?>BarangMasuk";
 
-                //                 },
-                //                 // handling the promise rejection
-                //                 function(dismiss) {
-                //                     if (dismiss === 'timer') {
-                //                         console.log('I was closed by the timer')
-                //                     }
-                //                 }
-                //             )
-                //         } else {
-                //             Swal.fire(
-                //                 'Cancelled',
-                //                 '',
-                //                 'error'
-                //             )
-                //         }
+                                                })
+                                                // function() {
+                                                //     location.reload();
+                                                // }
 
-                //     });
-                // });
+                                            }
+                                        }
+                                    });
+
+                                },
+                                // handling the promise rejection
+                                function(dismiss) {
+                                    if (dismiss === 'timer') {
+                                        console.log('I was closed by the timer')
+                                    }
+                                }
+                            )
+                        } else {
+                            Swal.fire(
+                                'Cancelled',
+                                '',
+                                'error'
+                            )
+                        }
+
+                    });
+                });
 
             });
         </script>
