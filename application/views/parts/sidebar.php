@@ -39,6 +39,9 @@
                         <li class="submenu-item <?php echo active_link('Bahan'); ?>">
                             <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Data Bahan</a>
                         </li>
+                        <li class="submenu-item <?php echo active_link('Helm'); ?>">
+                            <a href="<?= base_url('Helm') ?>"><i class="fa-fw select-all fas"></i> Data Helm</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="sidebar-item  has-sub">
@@ -52,6 +55,9 @@
                         $url = 'active';
                     } ?>
                     <ul class="submenu <?php echo $url ?>">
+                        <li class="submenu-item <?php echo active_link('PemesananBarang'); ?>">
+                            <a href="<?php echo base_url('PemesananBarang') ?>"><i class="fa-fw select-all fas"></i> Order Barang</a>
+                        </li>
                         <li class="submenu-item <?php echo active_link('BarangMasuk'); ?>">
                             <a href="<?php echo base_url('BarangMasuk') ?>"><i class="fa-fw select-all fas"></i> Barang Masuk</a>
                         </li>

@@ -21,6 +21,14 @@ class M_Bahan extends CI_Model
         return $id;
     }
 
+    function getHargaBahan($kode)
+    {
+        $query = $this->db->query("SELECT harga FROM bahan WHERE KodeBahan = '$kode'");
+        $data = $query->result_array();
+
+        return $data;
+    }
+
     function insertBahan($data)
     {
         $this->db->insert('bahan', $data);

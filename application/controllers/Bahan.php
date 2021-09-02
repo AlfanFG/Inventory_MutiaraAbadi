@@ -33,7 +33,7 @@ class Bahan extends CI_Controller
     {
         $this->load->helper('nav');
         $data['bahan'] = $this->M_Bahan->getAllBahan();
-        $this->load->view('admin/v_dataBahan', $data);
+        $this->load->view('admin/data_master/v_dataBahan', $data);
     }
 
     public function addBahan()
