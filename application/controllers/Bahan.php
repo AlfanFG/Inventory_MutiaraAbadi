@@ -41,17 +41,18 @@ class Bahan extends CI_Controller
 
         $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
         $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
-        $this->form_validation->set_rules('sisa', 'Sisa Bahan', 'required');
-
-
-
+        $this->form_validation->set_rules('harga', 'Harga Bahan', 'required');
+        $this->form_validation->set_rules('banyak', 'Banyak Bahan', 'required');
+        $this->form_validation->set_rules('satuan', 'Satuan Bahan', 'required');
 
         if ($this->form_validation->run()) {
 
             $data = array(
                 'KodeBahan' => $this->input->post('kodeBahan'),
                 'NamaBahan' => $this->input->post('namaBahan'),
-                'pcs' => $this->input->post('sisa')
+                'harga' => $this->input->post('harga'),
+                'banyak' => $this->input->post('banyak'),
+                'satuan' => $this->input->post('satuan')
             );
             $this->M_Bahan->insertBahan($data);
         } else {
@@ -60,7 +61,9 @@ class Bahan extends CI_Controller
 
                 'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
                 'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'sisa' => form_error('sisa', '<p class="mt-3 text-danger">', '</p>'),
+                'harga' => form_error('harga', '<p class="mt-3 text-danger">', '</p>'),
+                'banyak' => form_error('banyak', '<p class="mt-3 text-danger">', '</p>'),
+                'satuan' => form_error('satuan', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
 
             );
@@ -75,23 +78,31 @@ class Bahan extends CI_Controller
     {
         $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
         $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
-        $this->form_validation->set_rules('sisa', 'Sisa Bahan', 'required');
+        $this->form_validation->set_rules('harga', 'Harga Bahan', 'required');
+        $this->form_validation->set_rules('banyak', 'Banyak Bahan', 'required');
+        $this->form_validation->set_rules('satuan', 'Satuan Bahan', 'required');
 
 
         if ($this->form_validation->run()) {
             $data = array(
                 'KodeBahan' => $this->input->post('kodeBahan'),
                 'NamaBahan' => $this->input->post('namaBahan'),
-                'pcs' => $this->input->post('sisa')
+                'harga' => $this->input->post('harga'),
+                'banyak' => $this->input->post('banyak'),
+                'satuan' => $this->input->post('satuan')
             );
             $this->M_Bahan->updateBahan($data, $id);
         } else {
             $json = array();
             $json = array(
+
                 'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
                 'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'sisa' => form_error('sisa', '<p class="mt-3 text-danger">', '</p>'),
+                'harga' => form_error('harga', '<p class="mt-3 text-danger">', '</p>'),
+                'banyak' => form_error('banyak', '<p class="mt-3 text-danger">', '</p>'),
+                'satuan' => form_error('satuan', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
+
             );
 
             $this->output

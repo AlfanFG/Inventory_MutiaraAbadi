@@ -14,7 +14,7 @@ class Pegawai extends CI_Controller
     public function index()
     {
         $data['NamaPegawai'] = $this->M_Pegawai->getAllPegawai();
-        $this->load->view('admin/v_Pegawai', $data);
+        $this->load->view('admin/data_master/v_Pegawai', $data);
         // if ($this->session->userdata('hakAkses') == '1' && $this->session->userdata('status') == 'login') {
         //     redirect('Login');
         // } else if ($this->session->userdata('hakAkses') == '2' && $this->session->userdata('status') == 'login') {
@@ -76,6 +76,7 @@ class Pegawai extends CI_Controller
         $this->form_validation->set_rules('NamaPegawai', 'Nama Pegawai', 'required');
         $this->form_validation->set_rules('alamatPegawai', 'alamatPegawai', 'required');
         $this->form_validation->set_rules('tgl_lahir', 'tgl_lahir', 'required');
+        $this->form_validation->set_rules('statusPegawai', 'statusPegawai', 'required');
         $this->form_validation->set_rules('nomorTelp', 'nomorTelp', 'required');
 
 
@@ -86,6 +87,7 @@ class Pegawai extends CI_Controller
                 'NamaPegawai' => $this->input->post('NamaPegawai'),
                 'alamatPegawai' => $this->input->post('alamatPegawai'),
                 'tgl_lahir' => $this->input->post('tgl_lahir'),
+                'statusPegawai' => $this->input->post('statusPegawai'),
                 'nomorTelp' => $this->input->post('nomorTelp')
 
             );
@@ -93,15 +95,14 @@ class Pegawai extends CI_Controller
         } else {
             $json = array();
             $json = array(
-
                 'id_pegawai' => form_error('id_pegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'id_jabatan' => form_error('id_jabatan', '<p class="mt-3 text-danger">', '</p>'),
                 'NamaPegawai' => form_error('NamaPegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'alamatPegawai' => form_error('alamatPegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'tgl_lahir' => form_error('tgl_lahir', '<p class="mt-3 text-danger">', '</p>'),
+                'statusPegawai' => form_error('statusPegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'nomorTelp' => form_error('nomorTelp', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
-
             );
 
             $this->output

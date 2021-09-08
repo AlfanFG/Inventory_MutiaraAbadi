@@ -29,6 +29,14 @@ class M_Bahan extends CI_Model
         return $data;
     }
 
+    function getSatuan($kode)
+    {
+        $query = $this->db->query("SELECT satuan FROM bahan WHERE KodeBahan = '$kode'");
+        $data = $query->result_array();
+
+        return $data;
+    }
+
     function insertBahan($data)
     {
         $this->db->insert('bahan', $data);
