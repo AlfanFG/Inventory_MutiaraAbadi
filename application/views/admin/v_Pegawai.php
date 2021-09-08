@@ -109,11 +109,10 @@ $this->load->view('parts/header');
                                             <tr>
                                                 <th>No.</th>
                                                 <th>ID Pegawai</th>
-
                                                 <th>Nama Pegawai</th>
                                                 <th>Alamat</th>
-                                                <th>Tanggal Lahir</th>
                                                 <th>Nomor Telp</th>
+                                                <th>Status </th>
                                                 <th>Tools</th>
 
                                             </tr>
@@ -126,13 +125,20 @@ $this->load->view('parts/header');
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $data['id_pegawai'] ?></td>
-
                                                     <td><?php echo $data['NamaPegawai'] ?></td>
                                                     <td><?php echo $data['alamatPegawai'] ?></td>
-                                                    <td><?php echo $data['tgl_lahir'] ?></td>
                                                     <td><?php echo $data['nomorTelp'] ?></td>
+                                                    <td><?php echo $data['statusPegawai'] ?></td>
                                                     <td class="text-center">
-                                                        <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="javascript:;" class="btn btn-warning btn-edit"
+                                                        data-id_pegawai="<?php echo $data['id_pegawai'] ?>"
+                                                        data-id_jabatan="<?php echo $data['id_jabatan'] ?>"
+                                                        data-NamaPegawai="<?php echo $data['NamaPegawai'] ?>"
+                                                        data-alamatPegawai="<?php echo $data['alamatPegawai'] ?>"
+                                                        data-nomorTelp="<?php echo $data['nomorTelp'] ?>"
+                                                        data-tgl_lahir="<?php echo $data['tgl_lahir'] ?>"
+                                                        data-statusPegawai="<?php echo $data['statusPegawai'] ?>"
+                                                        data-toggle="modal" data-target="#tambah"><i class="fa fa-edit"></i></a>
 
                                                     </td>
 
@@ -173,7 +179,11 @@ $this->load->view('parts/header');
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">ID jabatan</label>
-                                            <input type="text" name="id_jabatan" id="id_jabatan" class="form-control">
+                                            <select type="text" name="id_jabatan" id="id_jabatan" class="form-control">
+                                                <option value="1">1 - Supervisor</option>
+                                                <option value="2">2 - Administrator</option>
+                                                <option value="3">3 - Pegawai</option>
+                                            </select>
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -209,6 +219,16 @@ $this->load->view('parts/header');
                                         <div class="form-group">
                                             <label class="control-label">Nomor Telp</label>
                                             <input type="text" name="nomorTelp" id="nomorTelp" class="form-control">
+                                            <div class="error" style="font-size: medium; width:500px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Status</label>
+                                            <select type="text" name="statusPegawai" id="statusPegawai" class="form-control">
+                                                <option value="aktif">Aktif</option>
+                                                <option value="tidak aktif">Tidak Aktik</option>
+                                            </select>
                                             <div class="error" style="font-size: medium; width:500px"></div>
                                         </div>
                                     </div>
@@ -281,8 +301,6 @@ $this->load->view('parts/header');
                         closeOnConfirm: false,
                         closeOnCancel: false
                     }).then(function() {
-
-
 
 
                         $('#tambah').modal('hide');
@@ -380,13 +398,14 @@ $this->load->view('parts/header');
                     $('.error').html('');
                     fstatus = 'update';
                     $('#btn-save').val('Update');
-                    var currentRow = $(this).closest("tr");
-                    var IdPegawai = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-                    var IdJabatan = currentRow.find("td:eq(2)").text();
-                    var namaPegawai = currentRow.find("td:eq(3)").text();
-                    var alamat = currentRow.find("td:eq(4)").text();
-                    var tglLahir = currentRow.find("td:eq(5)").text();
-                    var nomorTelp = currentRow.find("td:eq(6)").text();
+                    //var currentRow = $(this).closest("tr");
+                    var IdPegawai = $(this).data('id_pegawai'); // get current row 2nd TD
+                    var IdJabatan = $(this).data('id_pegawai');
+                    var namaPegawai = $(this).data('NamaPegawai');
+                    var alamat = $(this).data('alamatPegawai');
+                    var tgl_lahir = $(this).data('tgl_lahir');
+                    var nomorTelp = $(this).data('nomorTelp');
+                    var statusPegawai = $(this).data('statusPegawai');
 
                     $('#tambah').modal('show');
                     $('#id_pegawai').val(IdPegawai);
@@ -395,12 +414,12 @@ $this->load->view('parts/header');
                     $('#alamatPegawai').val(alamat);
                     $('#tgl_lahir').val(tglLahir);
                     $('#nomorTelp').val(nomorTelp);
+                    $('#statusPegawai').val(statusPegawai);
 
                 });
 
                 $("#table-NamaPegawai").on('click', '.btn-delete', function() {
                     // get the current row
-
 
                     var currentRow = $(this).closest("tr");
                     var id = currentRow.find("td:eq(1)").text(); // get id jenis
