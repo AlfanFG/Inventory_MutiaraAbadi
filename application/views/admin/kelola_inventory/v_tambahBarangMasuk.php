@@ -398,8 +398,8 @@ $this->load->view('parts/header');
                                 alert('Something is wrong!');
                             },
                             success: function(data) {
-
-                                $('#satuan' + i).val(data);
+                                var value = JSON.parse(data);
+                                $('#satuan1').val(value.satuan);
                             }
                         });
 
