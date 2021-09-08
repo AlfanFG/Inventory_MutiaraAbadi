@@ -116,10 +116,7 @@ $this->load->view('parts/header');
                                             <div class="error"></div>
                                         </div>
 
-
-
                                     </div>
-
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-sm-3">
                                             <label for="roundText">Supplier</label>
@@ -155,7 +152,6 @@ $this->load->view('parts/header');
 
                                             </div>
                                             <div class="row" style="margin-top: 20px;">
-
                                                 <div class="col-sm-3">
                                                     <label for="roundText">Nama Barang</label>
                                                 </div>
@@ -169,11 +165,28 @@ $this->load->view('parts/header');
 
                                                 </div>
                                                 <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
+                                                </div>
+                                            </div>
 
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label for="roundText">Satuan</label>
+                                                </div>
+                                                <div class="col-sm-8 dynamic">
+                                                    <div class="form-group add">
+                                                        <select name="satuan[]" id="satuan1" class="form-select satuan" readonly>
+                                                            <option value="Yard">Yard</option>
+                                                            <option value="Lembar">Lembar</option>
+                                                            <option value="Meter">Meter</option>
+                                                            <option value="Potong">Potong</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="error"></div>
 
                                                 </div>
-
-
+                                                <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
+                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -184,7 +197,7 @@ $this->load->view('parts/header');
                                                 <div class="col-sm-4 dynamic">
                                                     <div class="form-group add">
 
-                                                        <input type="text" id="banyak1" name="banyak[]" class="form-control round" placeholder="Banyak / yard" required>
+                                                        <input type="text" id="banyak1" name="banyak[]" class="form-control round banyak" placeholder="Banyak / yard" required>
 
 
                                                     </div>
@@ -252,15 +265,38 @@ $this->load->view('parts/header');
                     source: "<?php echo site_url('BarangMasuk/get_autocomplete/?'); ?>"
 
                 });
+
+                $('.barang').change(function() {
+                    var namaBahan = $('#barang1').val();
+
+                    var kode = namaBahan.substring(1, 6);
+
+                    $.ajax({
+                        url: '<?php echo base_url('') ?>BarangMasuk/getSatuanBarang/' + kode,
+                        type: 'POST',
+                        cache: false,
+                        error: function() {
+                            alert('Something is wrong!');
+                        },
+                        success: function(data) {
+                            var value = JSON.parse(data);
+                            $('#satuan1').val(value.satuan);
+                        }
+                    });
+
+                });
+
                 var i = 1;
+                let barang = [];
                 $('#addBarang').click(function() {
 
                     i++;
+                    barang[i - 1] = i;
                     $('.brg-group').append(`
                                             <div class="brg-group-no` + i + `">
                                             <div class="divider">
 
-                                                <div class="divider-text"><span class="badge bg-dark">Barang ` + i + `</span></div>
+                                                <div class="divider-text"><span class="badge bg-dark" id="title` + i + `">Bahan ` + i + `</span></div>
 
                                             </div>
                                             <div class="row" style="margin-top: 20px;">
@@ -283,6 +319,28 @@ $this->load->view('parts/header');
                                             </div>
 
                                             <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label for="roundText">Satuan</label>
+                                                </div>
+                                                <div class="col-sm-8 dynamic">
+                                                    <div class="form-group add">
+
+                                                        <select name="satuan[]" id="satuan` + i + `" class="form-select satuan" readonly>
+                                                            <option value="Yard">Yard</option>
+                                                            <option value="Lembar">Lembar</option>
+                                                            <option value="Meter">Meter</option>
+                                                            <option value="Potong">Potong</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <div class="error"></div>
+
+                                                </div>
+                                                <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
 
                                             <div class="col-sm-3">
 
@@ -290,7 +348,7 @@ $this->load->view('parts/header');
                                             <div class="col-sm-4 dynamic">
                                                 <div class="form-group add">
                                                     
-                                                    <input type="text" id="banyak` + i + `" name="banyak[]" class="form-control round" placeholder="Banyak / Yard" required>
+                                                    <input type="text" id="banyak` + i + `" name="banyak[]" class="form-control round banyak" placeholder="Banyak / Yard" required>
 
 
                                                 </div>
@@ -327,10 +385,26 @@ $this->load->view('parts/header');
 
                     });
 
-                    // $('.dynamic-del').append(`<div class="form-group add` + i + `">
-                    //                         <button class="btn btn-danger btn-brg-delete"><i class="fas fa-minus-circle"></i></button>
-                    //                     </div>`);
-                    console.log(i);
+                    $('#barang' + i).change(function() {
+                        var namaBahan = $('#barang' + i).val();
+
+                        var kode = namaBahan.substring(1, 6);
+
+                        $.ajax({
+                            url: '<?php echo base_url('') ?>BarangMasuk/getSatuanBarang/' + kode,
+                            type: 'POST',
+                            cache: false,
+                            error: function() {
+                                alert('Something is wrong!');
+                            },
+                            success: function(data) {
+
+                                $('#satuan' + i).val(data);
+                            }
+                        });
+
+                    });
+
                     $('#rincian' + i).on('keyup', function(e) {
                         console.log('ewf');
                         var bilangan = $('#rincian' + i).val().substring(3);
@@ -382,8 +456,6 @@ $this->load->view('parts/header');
 
                 })
 
-
-
                 $('#rincian1').on('keyup', function(e) {
 
                     var bilangan = $('#rincian1').val().substring(3);
@@ -406,8 +478,6 @@ $this->load->view('parts/header');
 
                 var input = document.getElementsByClassName('rincian');
 
-
-
                 $('#rincian1').focus(function() {
                     $('#rincian1').val('Rp. ');
                 })
@@ -425,20 +495,33 @@ $this->load->view('parts/header');
 
                 $('div').on('click', '.del', function() {
                     let button_id = $(this).parent().attr('class');
-
-
                     let id = button_id.substring(13, 26);
-                    console.log(id);
-                    $('.' + id).remove();
+                    let selector = $(this).parents().map(function() {
+                            return this.className
+                        })
+                        .get(2);
+                    var clean = selector.replace(/\D/g, '');
+
                     i--;
+                    let index = barang.indexOf(clean);
+                    barang.splice(index, 1);
+
+                    // console.log(barang.length);
+                    $('.' + id).remove();
+                    let inc = parseInt(clean);
+
+                    for (var j = 2; j <= barang.length; j++) {
+                        inc++;
+                        $('#title' + inc).attr('id', 'title' + (inc - 1));
+                        $('#title' + (inc - 1)).text('Bahan ' + (inc - 1));
+
+                    }
                 });
                 // $('.btn-brg-delete').click(function() {
                 //     let button_id = $(this).parent().attr('id');
                 //     console.log(button_id);
                 //     console.log('fwe');
                 // })
-
-
 
                 var status;
                 $('#form-tambah').on('submit', function(e) {
@@ -496,7 +579,7 @@ $this->load->view('parts/header');
                                                 swal.showLoading();
                                                 $.each(data, function(key, value) {
                                                     //alert(value);
-                                                    $('#' + key).parents('.form-group').find('.error').html(value);
+                                                    $('.' + key).parents('.form-group').find('.error').html(value);
 
                                                 });
                                                 fstatus = '';

@@ -40,7 +40,7 @@
                             <a href="<?= base_url('Bahan') ?>"><i class="fa-fw select-all fas"></i> Data Bahan</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('Helm'); ?>">
-                            <a href="<?= base_url('Helm') ?>"><i class="fa-fw select-all fas"></i> Data Helm</a>
+                            <a href="<?= base_url('Helm') ?>"><i class="fas fa-hard-hat"></i> Data Helm</a>
                         </li>
                     </ul>
                 </li>
@@ -56,13 +56,13 @@
                     } ?>
                     <ul class="submenu <?php echo $url ?>">
                         <li class="submenu-item <?php echo active_link('PemesananBarang'); ?>">
-                            <a href="<?php echo base_url('PemesananBarang') ?>"><i class="fa-fw select-all fas"></i> Order Barang</a>
+                            <a href="<?php echo base_url('PemesananBarang') ?>"><i class="fas fa-cart-arrow-down"></i> Order Barang</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('BarangMasuk'); ?>">
                             <a href="<?php echo base_url('BarangMasuk') ?>"><i class="fa-fw select-all fas"></i> Barang Masuk</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('BarangKeluar'); ?>">
-                            <a href="<?= base_url('BarangKeluar') ?>"><i class="fa-fw select-all fas"></i> Barang Keluar</a>
+                            <a href="<?= base_url('BarangKeluar') ?>"><i class="fas fa-truck"></i> Barang Keluar</a>
                         </li>
                         <li class="submenu-item <?php echo active_link('KalkulasiBahan'); ?>">
                             <a href="<?= base_url('KalkulasiBahan') ?>"><i class="fa-fw select-all fas"></i> Kalkulasi Bahan</a>

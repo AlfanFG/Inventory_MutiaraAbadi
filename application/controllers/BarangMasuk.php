@@ -8,6 +8,7 @@ class BarangMasuk extends CI_Controller
         parent::__construct();
         $this->load->model('M_Pegawai');
         $this->load->model('M_BarangMasuk');
+        $this->load->model('M_Bahan');
         $this->load->library('form_validation');
         $this->load->helper('nav');
     }
@@ -50,81 +51,80 @@ class BarangMasuk extends CI_Controller
         $this->load->view('admin/kelola_inventory/v_detBarangMasuk', $data);
     }
 
+    public function getSatuanBarang($id)
+    {
+        $data = $this->M_Bahan->getSatuan($id);
+        $value = 0;
+        foreach ($data as $val) {
+            echo json_encode($val);
+        }
+    }
+
     public function addBarangMasuk()
     {
 
-        // $this->form_validation->set_rules('noSurat', 'No. Surat', 'required');
-        // $this->form_validation->set_rules('supplier', 'ID Jabatan', 'required');
-        // $this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
+        $this->form_validation->set_rules('noSurat', 'No. Surat', 'required');
+        $this->form_validation->set_rules('supplier', 'ID Jabatan', 'required');
+        $this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
+
+        $this->form_validation->set_rules('barang[]', 'Barang', 'required');
+        $this->form_validation->set_rules('rincian[]', 'Rincian', 'required');
+        $this->form_validation->set_rules('satuan[]', 'satuan', 'required');
+
         // $jumlah = $this->input->post('noSurat');
         // print_r($this->input->post());
         // die();
 
-        // for ($j = 1; $j < $jumlah; $j++) {
-        //     $this->form_validation->set_rules('barang' . $j, 'Barang' . $j, 'required');
-        //     $this->form_validation->set_rules('banyak' . $j, 'Banyak' . $j, 'required');
-        //     $this->form_validation->set_rules('rincian' . $j, 'Rincian' . $j, 'required');
-        // }
-        // if ($this->form_validation->run()) {
-        $jumlah = $this->input->post('jumlah');
 
-        $total = 0;
-        for ($i = 0; $i < $jumlah; $i++) {
-            $namaKode = $this->input->post('barang')[$i];
-            $namaBarang = substr($namaKode, 10);
-            $namaKodeBarang = substr($namaKode, 1, 5);
-            $rincian = $this->input->post('rincian')[$i];
-            $clean = preg_replace('/\D/', '', $rincian);
+        if ($this->form_validation->run()) {
+            $jumlah = $this->input->post('jumlah');
 
-            $dataBarang = array(
+            $total = 0;
+            for ($i = 0; $i < $jumlah; $i++) {
+                $namaKode = $this->input->post('barang')[$i];
+                $namaBarang = substr($namaKode, 10);
+                $namaKodeBarang = substr($namaKode, 1, 5);
+                $rincian = $this->input->post('rincian')[$i];
+
+                $clean = preg_replace('/\D/', '', $rincian);
+
+                $dataBarang = array(
+                    'noSuratJalan' => $this->input->post('noSurat'),
+                    'KodeBarang' => $namaKodeBarang,
+                    'NamaBarang' => $namaBarang,
+                    'banyak' => $this->input->post('banyak')[$i],
+                    'rincian' => (int)$clean
+                );
+
+                $total += (int)$clean;
+                $this->M_BarangMasuk->insertBarangMasuk($dataBarang);
+            }
+            $data = array(
                 'noSuratJalan' => $this->input->post('noSurat'),
-                'KodeBarang' => $namaKodeBarang,
-                'NamaBarang' => $namaBarang,
-                'banyak' => $this->input->post('banyak')[$i],
-                'rincian' => (int)$clean
+                'supplier' => $this->input->post('supplier'),
+                'tanggalMasuk' => $this->input->post('tglMasuk'),
+                'total' => $total
+            );
+            $this->db->insert('barang_masuk', $data);
+        } else {
+            $json = array();
+            $json = array(
+
+                'noSurat' => form_error('noSurat', '<p class="mt-3 text-danger">', '</p>'),
+                'supplier' => form_error('supplier', '<p class="mt-3 text-danger">', '</p>'),
+                'tanggalMasuk' => form_error('tanggalMasuk', '<p class="mt-3 text-danger">', '</p>'),
+                'barang' => form_error('barang[]', '<p class="mt-3 text-danger">', '</p>'),
+                'rincian' => form_error('rincian[]', '<p class="mt-3 text-danger">', '</p>'),
+                'satuan' => form_error('satuan[]', '<p class="mt-3 text-danger">', '</p>'),
+                'status' => 'invalid'
+
             );
 
-            $total += $this->input->post('rincian')[$i];
-            $this->M_BarangMasuk->insertBarangMasuk($dataBarang);
+            // print_r(array_merge($json, $json2, $json3));
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($json));
         }
-        $data = array(
-            'noSuratJalan' => $this->input->post('noSurat'),
-            'supplier' => $this->input->post('supplier'),
-            'tanggalMasuk' => $this->input->post('tglMasuk'),
-            'total' => $total
-        );
-        $this->db->insert('barang_masuk', $data);
-        // } else {
-        //     $json = array();
-        //     $json1 = array();
-        //     $json2 = array();
-        //     $json3 = array();
-        //     $jsonHasil = array();
-        //     $json1 = array(
-
-        //         'noSurat' => form_error('noSurat', '<p class="mt-3 text-danger">', '</p>'),
-        //         'supplier' => form_error('supplier', '<p class="mt-3 text-danger">', '</p>'),
-        //         'tglMasuk' => form_error('tglMasuk', '<p class="mt-3 text-danger">', '</p>')
-
-        //     );
-
-        //     for ($j = 1; $j < $jumlah; $j++) {
-        //         $json2 = array(
-        //             'barang' . $j => form_error('barang' . $j, '<p class="mt-3 text-danger">', '</p>'),
-        //             'banyak' . $j => form_error('banyak' . $j, '<p class="mt-3 text-danger">', '</p>'),
-        //             'rincian' . $j => form_error('rincian' . $j, '<p class="mt-3 text-danger">', '</p>'),
-        //         );
-        //         print_r(array_merge($json, $json2));
-        //     }
-
-        //     // print_r($jsonHasil);
-        //     $json3 = array('status' => 'invalid');
-
-        //     // print_r(array_merge($json, $json2, $json3));
-        //     $this->output
-        //         ->set_content_type('application/json')
-        //         ->set_output(json_encode($json));
-        // }
     }
 
     public function editPegawai($id)
