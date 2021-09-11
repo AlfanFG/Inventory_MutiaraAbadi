@@ -105,6 +105,17 @@ $this->load->view('parts/header');
                                 <div class="row">
                                     <div class="col">
                                         <?php foreach ($BarangMasuk as $brg) { ?>
+                                            <table width="38%">
+                                                <tr style="height: 50px;">
+                                                    <td>No Pemesanan</td>
+                                                    <td>:</td>
+                                                    <td><?= $brg['noPemesanan']; ?></td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                              
+                                            </table>
+                                            <hr>
                                             <table width="100%">
                                                 <tr style="height: 50px;">
                                                     <td>No Surat Jalan</td>
@@ -138,11 +149,13 @@ $this->load->view('parts/header');
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>Kode Barang</th>
+                                                <th>Kode</th>
                                                 <th>Nama Barang</th>
                                                 <th>Banyak</th>
+                                                <th>Belum Terkirim</th>
+                                                <th>Total Pesan</th>
                                                 <th>Rincian</th>
-                                                <th>Tools</th>
+                                            
                                             </tr>
                                         </thead>
 
@@ -153,13 +166,12 @@ $this->load->view('parts/header');
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $data['kodeBarang'] ?></td>
-                                                    <td width="300"><?= $data['namaBarang'] ?></td>
+                                                    <td width="250"><?= $data['NamaBahan'] ?></td>
                                                     <td><?= $data['banyak'] ?></td>
+                                                    <td><?= $data['jumlahPemesanan'] ?></td>
+                                                    <td><?= $data['totalPesan'] ?></td>
                                                     <td><?= $data['rincian'] ?></td>
-                                                    <td class="text-center">
-                                                        <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="javascript:void(0)" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
-                                                    </td>
+                                                  
 
                                                 </tr>
                                             <?php } ?>

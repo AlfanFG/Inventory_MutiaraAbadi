@@ -108,7 +108,8 @@ $this->load->view('parts/header');
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>No. Surat Jalan</th>
+                                                <th>No Surat</th>
+                                                <th>No Pemesanan</th>
                                                 <th>Supplier</th>
                                                 <th>Tanggal Masuk</th>
                                                 <th>Total</th>
@@ -124,6 +125,7 @@ $this->load->view('parts/header');
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $data['noSuratJalan'] ?></td>
+                                                    <td><?= $data['noPemesanan'] ?></td>
                                                     <td><?= $data['supplier'] ?></td>
                                                     <td><?= $data['tanggalMasuk'] ?></td>
                                                     <td><?= $data['total'] ?></td>
@@ -131,7 +133,6 @@ $this->load->view('parts/header');
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
                                                         <a href="<?= base_url('BarangMasuk/detailBarangMasuk/' . $data['noSuratJalan']) ?>" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
                                                     </td>
-
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -226,8 +227,6 @@ $this->load->view('parts/header');
             </div>
         </div>
         <!-- End of Main Content -->
-
-
         <?php
         $this->load->view('parts/footer');
         ?>
@@ -253,17 +252,6 @@ $this->load->view('parts/header');
                             className: 'btn btn-primary'
                         },
                     ],
-
-                });
-
-                $('#btn-tambah').click(function() {
-                    $('.error').html('');
-                    $('#form-NamaPegawai')[0].reset();
-                    // $('#img').html(`<input type="file" class="form-control" id="image" name="image" value="" placeholder="Add image">
-                    //                             <?php echo form_error('image'); ?>`);
-                    // // $('#insert_form')[0].reset();
-                    $('#btn-save').val('Save');
-                    $('#tambah').modal('show');
                 });
 
                 $('#form-NamaPegawai').on('submit', function(e) {

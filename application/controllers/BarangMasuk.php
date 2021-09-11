@@ -9,6 +9,7 @@ class BarangMasuk extends CI_Controller
         $this->load->model('M_Pegawai');
         $this->load->model('M_BarangMasuk');
         $this->load->model('M_Bahan');
+        $this->load->model('M_OrderBahan');
         $this->load->library('form_validation');
         $this->load->helper('nav');
     }
@@ -41,7 +42,8 @@ class BarangMasuk extends CI_Controller
 
     public function viewTambah()
     {
-        $this->load->view('admin/kelola_inventory/v_tambahBarangMasuk');
+        $data['pemesanan'] = $this->M_OrderBahan->getAllOrder();
+        $this->load->view('admin/kelola_inventory/v_tambahBarangMasuk', $data);
     }
 
     public function detailBarangMasuk($id)
@@ -62,20 +64,14 @@ class BarangMasuk extends CI_Controller
 
     public function addBarangMasuk()
     {
-
         $this->form_validation->set_rules('noSurat', 'No. Surat', 'required');
+        $this->form_validation->set_rules('noPemesanan', 'No. Pemesanan', 'required');
         $this->form_validation->set_rules('supplier', 'ID Jabatan', 'required');
         $this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
-
         $this->form_validation->set_rules('barang[]', 'Barang', 'required');
+        $this->form_validation->set_rules('banyak[]', 'Banyak', 'required');
         $this->form_validation->set_rules('rincian[]', 'Rincian', 'required');
-        $this->form_validation->set_rules('satuan[]', 'satuan', 'required');
-
-        // $jumlah = $this->input->post('noSurat');
-        // print_r($this->input->post());
-        // die();
-
-
+      
         if ($this->form_validation->run()) {
             $jumlah = $this->input->post('jumlah');
 
@@ -90,6 +86,7 @@ class BarangMasuk extends CI_Controller
 
                 $dataBarang = array(
                     'noSuratJalan' => $this->input->post('noSurat'),
+                    'noPemesanan' => $this->input->post('noPemesanan'),
                     'KodeBarang' => $namaKodeBarang,
                     'NamaBarang' => $namaBarang,
                     'banyak' => $this->input->post('banyak')[$i],
@@ -101,6 +98,7 @@ class BarangMasuk extends CI_Controller
             }
             $data = array(
                 'noSuratJalan' => $this->input->post('noSurat'),
+                'noPemesanan' => $this->input->post('noPemesanan'),
                 'supplier' => $this->input->post('supplier'),
                 'tanggalMasuk' => $this->input->post('tglMasuk'),
                 'total' => $total
@@ -111,11 +109,12 @@ class BarangMasuk extends CI_Controller
             $json = array(
 
                 'noSurat' => form_error('noSurat', '<p class="mt-3 text-danger">', '</p>'),
+                'noPemesanan' => form_error('noPemesanan', '<p class="mt-3 text-danger">', '</p>'),
                 'supplier' => form_error('supplier', '<p class="mt-3 text-danger">', '</p>'),
-                'tanggalMasuk' => form_error('tanggalMasuk', '<p class="mt-3 text-danger">', '</p>'),
+                'tglMasuk' => form_error('tglMasuk', '<p class="mt-3 text-danger">', '</p>'),
                 'barang' => form_error('barang[]', '<p class="mt-3 text-danger">', '</p>'),
+                'banyak' => form_error('banyak[]', '<p class="mt-3 text-danger">', '</p>'),
                 'rincian' => form_error('rincian[]', '<p class="mt-3 text-danger">', '</p>'),
-                'satuan' => form_error('satuan[]', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
 
             );

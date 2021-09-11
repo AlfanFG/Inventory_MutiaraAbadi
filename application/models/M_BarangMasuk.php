@@ -4,12 +4,15 @@ class M_BarangMasuk extends CI_Model
 {
     public function getAllBarangMasuk()
     {
-        return $this->db->get('barang_masuk')->result_array();
+        $query = $this->db->query("SELECT bm.noSuratJalan, bm.noPemesanan, p.supplier, bm.tanggalMasuk, bm.total FROM barang_masuk AS bm INNER JOIN pemesanan_barang AS p ON bm.noPemesanan = p.noPemesanan order by bm.noSuratJalan desc");
+        $data = $query->result_array();
+
+        return $data;
     }
 
     function getDetailBarangMasuk($id)
     {
-        $query = $this->db->query("SELECT * FROM detail_barang_masuk WHERE noSuratJalan = '$id'");
+        $query = $this->db->query("SELECT D.kodeBarang, B.NamaBahan, D.banyak, D.rincian, dp.totalPesan, dp.jumlahPemesanan FROM bahan AS B INNER JOIN detail_barang_masuk AS D ON B.KodeBahan = D.kodeBarang INNER JOIN detail_pemesanan_bahan AS dp ON D.kodeBarang = dp.KodeBahan WHERE D.noSuratJalan = '$id'");
         $data = $query->result_array();
 
         return $data;
@@ -23,9 +26,10 @@ class M_BarangMasuk extends CI_Model
         return $data;
     }
 
+   
     public function getBarangMasukById($id)
     {
-        $query = $this->db->query("SELECT noSuratJalan, supplier, tanggalMasuk, total FROM barang_masuk WHERE noSuratJalan = '$id'");
+        $query = $this->db->query("SELECT bm.noSuratJalan, bm.noPemesanan, p.supplier, bm.tanggalMasuk, bm.total, dp.jumlahPemesanan, dp.totalPesan FROM barang_masuk AS bm INNER JOIN pemesanan_barang AS p ON bm.noPemesanan = p.noPemesanan INNER JOIN detail_pemesanan_bahan AS dp ON p.noPemesanan = dp.noPemesanan WHERE bm.noSuratJalan = '$id'");
         $data = $query->result_array();
 
         return $data;
