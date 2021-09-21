@@ -104,7 +104,7 @@ $this->load->view('parts/header');
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <?php foreach ($BarangMasuk as $brg) { ?>
+                                        <?php foreach ($pemesanan as $brg) { ?>
                                             <table width="38%">
                                                 <tr style="height: 50px;">
                                                     <td>No Pemesanan</td>
@@ -118,27 +118,14 @@ $this->load->view('parts/header');
                                             <hr>
                                             <table width="100%">
                                                 <tr style="height: 50px;">
-                                                    <td>No Surat Jalan</td>
+                                                    <td>Tanggal Pemesanan</td>
                                                     <td>:</td>
-                                                    <td><?= $brg['noSuratJalan']; ?></td>
-                                                    <td>Tanggal Masuk</td>
-                                                    <td>:</td>
-                                                    <td><?= $brg['tanggalMasuk']; ?></td>
-                                                </tr>
-                                                <tr style="height: 50px;">
+                                                    <td><?= $brg['tanggalPemesanan']; ?></td>
                                                     <td>Supplier</td>
                                                     <td>:</td>
                                                     <td><?= $brg['supplier']; ?></td>
-                                                    <td><b>Total</b></td>
-                                                    <td>:</td>
-                                                    <td><b><?= $brg['total']; ?></b> </td>
                                                 </tr>
-                                                <!-- <tr style="height: 50px;">
-
-                                                </tr>
-                                                <tr style="height: 50px;">
-
-                                                </tr> -->
+                                               
                                             </table>
                                         <?php } ?>
                                     </div>
@@ -149,30 +136,21 @@ $this->load->view('parts/header');
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>Kode</th>
-                                                <th>Nama Barang</th>
-                                                <th>Banyak</th>
-                                                <th>Belum Terkirim</th>
+                                                <th>Kode Bahan</th>
+                                                <th>Nama Bahan</th>
                                                 <th>Total Pesan</th>
-                                                <th>Rincian</th>
-                                            
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($detBarangMasuk as $data) { ?>
+                                            foreach ($detail as $data) { ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= $data['kodeBarang'] ?></td>
-                                                    <td width="200"><?= $data['NamaBahan'] ?></td>
-                                                    <td><?= $data['banyak'] .' '. $data['satuan']?></td>
-                                                    <td><?= $data['jumlahPemesanan'] ?></td>
-                                                    <td><?= $data['totalPesan'] ?></td>
-                                                    <td><?= $data['rincian'] ?></td>
-                                                  
-
+                                                    <td width="150"><?= $data['KodeBahan'] ?></td>
+                                                    <td><?= $data['NamaBahan'] ?></td>
+                                                    <td><?= $data['totalPesan'] . " " . $data['satuan'] ?></td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>

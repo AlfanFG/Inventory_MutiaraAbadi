@@ -80,13 +80,13 @@ $this->load->view('parts/header');
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <!-- <h3>Tambah Barang Masuk</h3> -->
+                                <!-- <h3>Tambah Barang Keluar</h3> -->
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?= base_url('Dashboard') ?>">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Masuk
+                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Keluar
                                         </li>
                                     </ol>
                                 </nav>
@@ -94,40 +94,42 @@ $this->load->view('parts/header');
                         </div>
                     </div>
                 </div>
-                <?php
-                $noPemesanan = $this->M_OrderBahan->getNoPemesanan();
-                ?>
                 <section class="row">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header bg-primary">
-                                <h5 style="color: white;">Tambah Pemesanan Bahan</h5>
+                                <h5 style="color: white;">Tambah Perhitungan Produksi</h5>
                                 <!-- <h6 class="m-0 font-weight-bold text-primary">Data Pegawai </h6>
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a> -->
                             </div>
+                            
                             <div class="card-body">
                                 <form id="form-tambah" method="POST" enctype="multipart/form-data" style="margin-top: 40px">
                                     <!-- <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a> -->
+                   
+                                  
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                            <label for="roundText">Nomor Pemesanan</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <div class="form-group">
-                                                <input type="text" id="noPemesanan" name="noPemesanan" class="form-control round" placeholder="Masukan No. Pemesanan" value="<?= $noPemesanan; ?>">
-                                            <div class="error"></div>
+                                            <div class="col-sm-3">
+                                                <label for="roundText">Pilih Helm</label>
                                             </div>
-                                            
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" id="helm" name="helm" class="form-control round helm" placeholder="Pilih Data Helm">
+                                                    <div class="error"></div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button type="button" class="btn btn-success" id="btn-pilih-helm" style="width: 100%;">Pilih</button>
+                                            </div>
                                         </div>
-
-                                    </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-sm-3">
-                                            <label for="roundText">Tanggal Pemesanan</label>
+                                            <label for="roundText">Jumlah Produksi</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="form-group">
-                                                <input type="date" id="tgl_pemesanan" name="tgl_pemesanan" class="form-control round">
+                                                <input type="text" id="jmlProd" name="jmlProd" class="form-control round jmlProd" placeholder="Masukan Jumlah Produksi">
                                                 <div class="error"></div>
                                             </div>
                                             
@@ -135,78 +137,20 @@ $this->load->view('parts/header');
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-sm-3">
-                                            <label for="roundText">Supplier</label>
+                                            <label for="roundText">Jumlah Yard</label>
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="form-group">
-                                                <input type="text" id="supplier" name="supplier" class="form-control round">
+                                                <input type="date" id="jmlYard" name="jmlYard" class="form-control round jmlYard">
                                                 <div class="error"></div>
                                             </div>
                                             
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-top: 20px;">
-                                        <div class="col-sm-3">
-                                            <label for="Bahan Group">Bahan Group</label>
-                                        </div>
-                                    </div>
-                                    <div class="brg-group">
-                                        <div class="brg-group-no">
-                                            <div class="divider">
-
-                                                <div class="divider-text"><span class="badge bg-dark">Bahan 1</span></div>
-
-                                            </div>
-                                            <div class="row" style="margin-top: 20px;">
-                                                <div class="col-sm-3">
-                                                    <label for="roundText">Nama Bahan</label>
-                                                </div>
-                                                <div class="col-sm-8 dynamic">
-                                                    <div class="form-group add">
-
-                                                        <input type="text" id="bahan1" name="bahan[]" class="form-control round bahan" placeholder="Masukan Nama atau Kode Bahan" required>
-                                                        <div class="error"></div>
-                                                    </div>
-                                                    
-
-                                                </div>
-                                                <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <label for="roundText">Jumlah Pemesanan</label>
-                                                </div>
-                                                <div class="col-sm-8 dynamic">
-                                                    <div class="form-group add">
-                                                        <input type="text" id="jmlPesanan1" name="jmlPesanan[]" class="form-control round jmlPesanan" placeholder="Jumlah Pemesanan" required>
-                                                        <div class="error"></div>
-                                                    </div>
-                                                   
-                                                </div>
-                                                <div class="col-sm-1 dynamic-del" style="margin-top: 50px;">
-                                                </div>
-                                            </div>
-
-                                            <div class="divider divider-right">
-                                                <div class="divider-text del">
-                                                    <!-- <button class="btn btn-danger"><i class="fas fa-minus-circle"></i></button> -->
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <button type="button" class="btn btn-success rounded-pill" id="addBarang" style="float: right; margin-right: 65px"><i class="fas fa-plus"></i> Tambah Bahan</button>
-                                    </div>
-
-
-                                    <input type="hidden" id="jumlah" name="jumlah">
+                                    
                                     <div class="row" style="margin-top: 100px;">
                                         <hr>
-                                        <input type="submit" class="btn btn-primary" value="Simpan">
+                                        <input type="submit" class="btn btn-outline-primary" value="Simpan">
                                     </div>
                                 </form>
                             </div>
@@ -214,176 +158,78 @@ $this->load->view('parts/header');
                     </div>
                 </section>
             </div>
-
-
-
         </div>
         <!-- End of Main Content -->
+        <?php $helm = $this->M_Helm->getAllHelm(); ?>
+        <div class="modal fade text-left" id="modal-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="myModalLabel17">Pilih Nomor Pemesanan</h4>
+                                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <i class="fas fa-window-close"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                        <div class="table-responsive">
+                                    <table class="table table-striped" id="table-helm" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>No Pemesanan</th>
+                                                <th>Supplier</th>
+                                                <th>Tanggal Pemesanan</th>
+                                                <th>Tools</th>
+                                            </tr>
+                                        </thead>
 
+                                        <tbody>
+                                            <?php
+                                            $no = 1;
+                                            foreach ($helm as $data) { ?>
+                                                <tr>
+                                                    <td><?php echo $no++; ?></td>
+                                                    <td><?php echo $data['kodeHelm'] ?></td>
+                                                    <td><?php echo $data['namaHelm'] ?></td>
+                                                    <td><?php echo $data['total'] ?></td>
+                                                    <td class="text-center">
+                                                    <a href="javascript:;" class="btn btn-outline-secondary btn-pilih" data-kodehelm="<?php echo $data['kodeHelm'] ?>">Pilih</a>
+
+                                                    </td>
+
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
         <?php
         $this->load->view('parts/footer');
         ?>
         <script>
             $(document).ready(function() {
+                $('#table-helm').DataTable();
 
-                $(".bahan").autocomplete({
-                    source: "<?php echo site_url('PemesananBarang/get_autocomplete/?'); ?>"
-                });
-
-                // $('.barang').change(function() {
-                //     var namaBahan = $('#bahan1').val();
-
-                //     var kode = namaBahan.substring(1, 6);
-
-                //     $.ajax({
-                //         url: '<?php echo base_url('') ?>BarangMasuk/getSatuanBarang/' + kode,
-                //         type: 'POST',
-                //         cache: false,
-                //         error: function() {
-                //             alert('Something is wrong!');
-                //         },
-                //         success: function(data) {
-                //             var value = JSON.parse(data);
-                //             $('#satuan1').val(value.satuan);
-                //         }
-                //     });
-
-                // });
-
-                var i = 1;
-                let barang = [];
-                $('#addBarang').click(function() {
-
-                    i++;
-                    barang[i - 1] = i;
-                    $('.brg-group').append(`
-                                            <div class="brg-group-no` + i + `">
-                                            <div class="divider">
-
-                                                <div class="divider-text"><span class="badge bg-dark" id="title` + i + `">Bahan ` + i + `</span></div>
-
-                                            </div>
-                                            <div class="row" style="margin-top: 20px;">
-
-                                            <div class="col-sm-3">
-                                                <label for="roundText">Nama Barang</label>
-                                            </div>
-                                            <div class="col-sm-8 dynamic">
-                                                <div class="form-group add">
-                                                    <input type="text" id="bahan` + i + `" name="bahan[]" class="form-control round bahan" placeholder="Masukan Nama atau Kode Barang" required>
-                                                    <div class="error"></div>
-
-                                                </div>
-                                                
-
-                                            </div>
-                                           
-
-
-                                            </div>
-
-                                            <div class="row">
-
-                                            <div class="col-sm-3">
-
-                                            </div>
+                $('#btn-pilih-helm').click(function(){
                    
-                                            <div class="col-sm-8 dynamic">
-                                                <div class="form-group add">
-                                                    
-                                                    <input type="text" id="jmlPemesanan` + i + `" name="jmlPemesanan[]" class="form-control round jmlPemesanan" placeholder="Jumlah Pemesanan" required>
-                                                    <div class="error"></div>
-
-                                                </div>
-                                                
-                                            </div>
-                                          
-
-
-                                            </div>
-
-                                            <div class="divider divider-right">
-                                            <div class="divider-text brg-group-no` + i + `">
-                                                <button type="button" class="btn btn-danger del"><i class="fas fa-minus-circle"></i></button>
-                                            </div>
-
-                                            </div>
-
-                                            </div>
-                                            </div>`);
-                    $('#jumlah').val(i);
-                    $(".bahan").on('change', '.bahan', function() {
-
-                    }).autocomplete({
-                        source: "<?php echo site_url('PemesananBarang/get_autocomplete/?'); ?>"
-
-                    });
-
-                    // $('#bahan' + i).change(function() {
-                    //     var namaBahan = $('#barang' + i).val();
-
-                    //     var kode = namaBahan.substring(1, 6);
-
-                    //     $.ajax({
-                    //         url: '<?php echo base_url('') ?>BarangMasuk/getSatuanBarang/' + kode,
-                    //         type: 'POST',
-                    //         cache: false,
-                    //         error: function() {
-                    //             alert('Something is wrong!');
-                    //         },
-                    //         success: function(data) {
-                    //             var value = JSON.parse(data);
-                    //             $('#satuan' + i).val(value.satuan);
-                    //         }
-                    //     });
-
-                    // });
-
-
-
-                    // $('.rincian').on('keydown', function(event) {
-
-                    //     key = event.which || event.keyCode;
-                    //     if (key != 188 // Comma
-                    //         &&
-                    //         key != 8 // Backspace
-                    //         &&
-                    //         key != 17 && key != 86 & key != 67 // Ctrl c, ctrl v
-                    //         &&
-                    //         (key < 48 || key > 57) // Non digit
-                    //         // Dan masih banyak lagi seperti tombol del, panah kiri dan kanan, tombol tab, dll
-                    //     ) {
-                    //         event.preventDefault();
-                    //         return;
-                    //     }
-                    // });
+                    $('#modal-table').modal('show');
                 })
 
-
-
-                $('div').on('click', '.del', function() {
-                    let button_id = $(this).parent().attr('class');
-                    let id = button_id.substring(13, 26);
-                    let selector = $(this).parents().map(function() {
-                            return this.className
-                        })
-                        .get(2);
-                    var clean = selector.replace(/\D/g, '');
-                    i--;
-                    let index = barang.indexOf(clean);
-                    barang.splice(index, 1);
-
-                    // console.log(barang.length);
-                    $('.' + id).remove();
-                    let inc = parseInt(clean);
-
-                    for (var j = 2; j <= barang.length; j++) {
-                        inc++;
-                        $('#title' + inc).attr('id', 'title' + (inc - 1));
-                        $('#title' + (inc - 1)).text('Bahan ' + (inc - 1));
-                    }
-                });
-               
+                $('#table-helm').on('click', '.btn-pilih', function(){
+                    let kodeHelm = $(this).data('kodehelm');
+                    $('#helm').val(kodeHelm);
+                    $('#modal-table').modal('hide');
+                })
+                
+                   
                 var status;
                 $('#form-tambah').on('submit', function(e) {
                     e.preventDefault();
@@ -423,16 +269,18 @@ $this->load->view('parts/header');
                                 }
                             }).then(
                                 function() {
-                                   
+                                    for (var p of fd) {
+                                        console.log(p);
+                                    }
                                     $.ajax({
                                         ///nambah url
-                                        url: "<?php echo site_url('PemesananBarang/addPemesanan'); ?>",
+                                        url: "<?php echo site_url('BarangMasuk/addBarangMasuk'); ?>",
                                         method: "POST",
                                         data: fd,
                                         contentType: false,
                                         processData: false,
                                         success: function(data) {
-                                            console.log(data);
+                                          
                                             var status = false;
                                             if (data.status == 'invalid') {
                                                 swal.showLoading();
@@ -460,7 +308,7 @@ $this->load->view('parts/header');
                                                     confirmButtonText: "Oke",
                                                     closeOnConfirm: true
                                                 }).then(function() {
-                                                    window.location.href = "<?php echo base_url(); ?>PemesananBarang";
+                                                    window.location.href = "<?php echo base_url(); ?>BarangMasuk";
 
                                                 })
                                                 // function() {

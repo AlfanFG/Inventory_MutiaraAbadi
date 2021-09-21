@@ -252,10 +252,7 @@ $this->load->view('parts/header');
                 </section>
             </div>
 
-            <?php
-            $noSurat = $this->M_BarangMasuk->getNoSuratJalan();
-            ?>
-
+        
             
 
         </div>

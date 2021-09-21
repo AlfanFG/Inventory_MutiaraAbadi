@@ -80,13 +80,13 @@ $this->load->view('parts/header');
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Data Barang Masuk</h3>
+                                <h3>Data Barang Keluar</h3>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?= base_url('Dashboard') ?>">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Masuk
+                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Keluar
                                         </li>
                                     </ol>
                                 </nav>
@@ -102,77 +102,35 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <?php foreach ($BarangMasuk as $brg) { ?>
-                                            <table width="38%">
-                                                <tr style="height: 50px;">
-                                                    <td>No Pemesanan</td>
-                                                    <td>:</td>
-                                                    <td><?= $brg['noPemesanan']; ?></td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                              
-                                            </table>
-                                            <hr>
-                                            <table width="100%">
-                                                <tr style="height: 50px;">
-                                                    <td>No Surat Jalan</td>
-                                                    <td>:</td>
-                                                    <td><?= $brg['noSuratJalan']; ?></td>
-                                                    <td>Tanggal Masuk</td>
-                                                    <td>:</td>
-                                                    <td><?= $brg['tanggalMasuk']; ?></td>
-                                                </tr>
-                                                <tr style="height: 50px;">
-                                                    <td>Supplier</td>
-                                                    <td>:</td>
-                                                    <td><?= $brg['supplier']; ?></td>
-                                                    <td><b>Total</b></td>
-                                                    <td>:</td>
-                                                    <td><b><?= $brg['total']; ?></b> </td>
-                                                </tr>
-                                                <!-- <tr style="height: 50px;">
-
-                                                </tr>
-                                                <tr style="height: 50px;">
-
-                                                </tr> -->
-                                            </table>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive" style="margin-top: 40px;">
-                                    <table class="table table-bordered" id="table-detBarangMasuk" width="100%" cellspacing="0">
+                                <a href="<?= base_url('BarangKeluar/viewTambah') ?>" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Data</span></a>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="table-barangMasuk" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>Kode</th>
-                                                <th>Nama Barang</th>
-                                                <th>Banyak</th>
-                                                <th>Belum Terkirim</th>
-                                                <th>Total Pesan</th>
-                                                <th>Rincian</th>
-                                            
+                                                <th>id_barangKeluar</th>
+                                                <th>supplier</th>
+                                                <th>tanggalKirim</th>
+                                                <th>garndTotal</th>
+                                                <th>Tools</th>
+
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($detBarangMasuk as $data) { ?>
+                                            foreach ($barangKeluar as $data) { ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= $data['kodeBarang'] ?></td>
-                                                    <td width="200"><?= $data['NamaBahan'] ?></td>
-                                                    <td><?= $data['banyak'] .' '. $data['satuan']?></td>
-                                                    <td><?= $data['jumlahPemesanan'] ?></td>
-                                                    <td><?= $data['totalPesan'] ?></td>
-                                                    <td><?= $data['rincian'] ?></td>
-                                                  
-
+                                                    <td><?= $data['id_barangKeluar'] ?></td>
+                                                    <td><?= $data['supplier'] ?></td>
+                                                    <td><?= $data['tanggalKirim'] ?></td>
+                                                    <td><?= $data['grandTotal'] ?></td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="<?= base_url('BarangKeluar/detailBarangKeluar/' . $data['id_barangKeluar']) ?>" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
+                                                    </td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -184,9 +142,7 @@ $this->load->view('parts/header');
                 </section>
             </div>
 
-            <?php
-            $noSurat = $this->M_BarangMasuk->getNoSuratJalan();
-            ?>
+         
             <!-- modal tambah -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -267,15 +223,13 @@ $this->load->view('parts/header');
             </div>
         </div>
         <!-- End of Main Content -->
-
-
         <?php
         $this->load->view('parts/footer');
         ?>
         <script>
             $(document).ready(function() {
                 var status;
-                $('#table-detBarangMasuk').DataTable({
+                $('#table-barangMasuk').DataTable({
                     dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
@@ -294,17 +248,6 @@ $this->load->view('parts/header');
                             className: 'btn btn-primary'
                         },
                     ],
-
-                });
-
-                $('#btn-tambah').click(function() {
-                    $('.error').html('');
-                    $('#form-NamaPegawai')[0].reset();
-                    // $('#img').html(`<input type="file" class="form-control" id="image" name="image" value="" placeholder="Add image">
-                    //                             <?php echo form_error('image'); ?>`);
-                    // // $('#insert_form')[0].reset();
-                    $('#btn-save').val('Save');
-                    $('#tambah').modal('show');
                 });
 
                 $('#form-NamaPegawai').on('submit', function(e) {
@@ -419,7 +362,7 @@ $this->load->view('parts/header');
                     });
                 });
 
-                $("#table-detBarangMasuk").on('click', '.btn-edit', function() {
+                $("#table-barangMasuk").on('click', '.btn-edit', function() {
                     // get the current row
                     $('.error').html('');
                     fstatus = 'update';
@@ -442,7 +385,7 @@ $this->load->view('parts/header');
 
                 });
 
-                $("#table-detBarangMasuk").on('click', '.btn-delete', function() {
+                $("#table-barangMasuk").on('click', '.btn-delete', function() {
                     // get the current row
 
 

@@ -112,9 +112,8 @@ $this->load->view('parts/header');
                                                 <th>No.</th>
                                                 <th>Kode Bahan</th>
                                                 <th>Nama Bahan</th>
-                                                <th>Satuan</th>
-                                                <th>Harga</th>
                                                 <th>Banyak</th>
+                                                <th>Harga</th>
                                                 <th>Tools</th>
 
                                             </tr>
@@ -128,9 +127,8 @@ $this->load->view('parts/header');
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $data['KodeBahan'] ?></td>
                                                     <td style="width: 300px;"><?php echo $data['NamaBahan'] ?></td>
-                                                    <td><?php echo $data['satuan'] ?></td>
+                                                    <td><?php echo $data['banyak'] .' '. $data['satuan'] ?></td>
                                                     <td><?php echo $data['harga'] ?></td>
-                                                    <td><?php echo $data['banyak'] ?></td>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
 

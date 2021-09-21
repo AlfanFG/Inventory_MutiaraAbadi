@@ -1,99 +1,111 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class PemesananBarang extends CI_Controller
+class KalkulasiBahan extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('M_Pegawai');
+        $this->load->model('M_BarangKeluar');
+        $this->load->model('M_KalkulasiBahan');
+        $this->load->model('M_Bahan');
+        $this->load->model('M_Helm');
         $this->load->model('M_OrderBahan');
-        $this->load->model('M_BarangMasuk');
         $this->load->library('form_validation');
         $this->load->helper('nav');
     }
 
     public function index()
     {
+        $data['perhitungan'] = $this->M_KalkulasiBahan->getAllKalkulasi();
+        
+        $this->load->view('admin/kelola_inventory/v_kalkulasiBahan', $data);
+        // if ($this->session->userdata('hakAkses') == '1' && $this->session->userdata('status') == 'login') {
+        //     redirect('Login');
+        // } else if ($this->session->userdata('hakAkses') == '2' && $this->session->userdata('status') == 'login') {
 
-        if (($this->session->userdata('idJabatan') == 1) && ($this->session->userdata('status') == 'login')) {
 
-            redirect('Login');
-        } else if (($this->session->userdata('idJabatan') == 2) && ($this->session->userdata('status') == 'login')) {
-            $data['orderBahan'] = $this->M_OrderBahan->getAllOrder();
-            $this->load->view('admin/kelola_inventory/v_orderBahan', $data);
-        } else {
-            redirect('Login');
-        }
+        // } else {
+        //     redirect('Login');
+        // }
     }
 
-    public function detailOrder($id){
-        $data['detail'] = $this->M_OrderBahan->getOrderDetail($id);
-        $data['pemesanan'] = $this->M_OrderBahan->pemesananById($id);
-        $this->load->view('admin/kelola_inventory/v_detOrder', $data);
-    }
+   
 
-    //get kode dan nama barang auto complete
-    function get_autocomplete()
+    public function viewTambah()
     {
-        if (isset($_GET['term'])) {
-            $result = $this->M_BarangMasuk->getKodeNamaBarang($_GET['term']);
-            if (count($result) > 0) {
-                foreach ($result as $row)
-                    $arr_result[] =  '[' . $row->KodeBahan . '] - ' . $row->NamaBahan;
-                echo json_encode($arr_result);
-            }
-        }
+        // $data['pemesanan'] = $this->M_OrderBahan->getAllOrder();
+        $this->load->view('admin/kelola_inventory/v_tambahKalkulasi');
     }
 
-    // redirect ke halaman tambah pemesanan
-    public function tambahPemesanan()
+    public function detailBarangMasuk($id)
     {
-       
-        $this->load->view('admin/kelola_inventory/v_tambahOrder');
+        $data['detBarangMasuk'] = $this->M_BarangMasuk->getDetailBarangMasuk($id);
+        $data['BarangMasuk'] = $this->M_BarangMasuk->getBarangMasukById($id);
+        $this->load->view('admin/kelola_inventory/v_detBarangMasuk', $data);
     }
 
-    public function addPemesanan()
+    public function getHelmByKode($kode)
     {
-        $this->form_validation->set_rules('noPemesanan', 'No Pemesanan', 'required');
-        $this->form_validation->set_rules('tgl_pemesanan', 'Tanggal Pemesanan', 'required');
-        $this->form_validation->set_rules('supplier', 'Supplier', 'required');
-        $this->form_validation->set_rules('bahan[]', 'Bahan', 'required');
-        $this->form_validation->set_rules('jmlPesanan[]', 'Jumlah Pesanan', 'required');
+        $data = $this->M_Helm->getSatuan($kode);
+        echo json_encode($data);
+        
+    }
 
+    public function addBarangMasuk()
+    {
+        $this->form_validation->set_rules('noSurat', 'No. Surat', 'required');
+        $this->form_validation->set_rules('noPemesanan', 'No. Pemesanan', 'required');
+        $this->form_validation->set_rules('supplier', 'ID Jabatan', 'required');
+        $this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
+        $this->form_validation->set_rules('barang[]', 'Barang', 'required');
+        $this->form_validation->set_rules('banyak[]', 'Banyak', 'required');
+        $this->form_validation->set_rules('rincian[]', 'Rincian', 'required');
+      
         if ($this->form_validation->run()) {
             $jumlah = $this->input->post('jumlah');
 
             $total = 0;
             for ($i = 0; $i < $jumlah; $i++) {
-                $namaKode = $this->input->post('bahan')[$i];
+                $namaKode = $this->input->post('barang')[$i];
                 $namaBarang = substr($namaKode, 10);
                 $namaKodeBarang = substr($namaKode, 1, 5);
-                $jml = $this->input->post('jmlPesanan')[$i];
+                $rincian = $this->input->post('rincian')[$i];
+
+                $clean = preg_replace('/\D/', '', $rincian);
 
                 $dataBarang = array(
+                    'noSuratJalan' => $this->input->post('noSurat'),
                     'noPemesanan' => $this->input->post('noPemesanan'),
-                    'KodeBahan' => $namaKodeBarang,
-                    'jumlahPemesanan' => $this->input->post('jmlPesanan')[$i]
+                    'KodeBarang' => $namaKodeBarang,
+                    'NamaBarang' => $namaBarang,
+                    'banyak' => $this->input->post('banyak')[$i],
+                    'rincian' => (int)$clean
                 );
 
-                $this->M_OrderBahan->insertPemesanan($dataBarang);
+                $total += (int)$clean;
+                $this->M_BarangMasuk->insertBarangMasuk($dataBarang);
             }
             $data = array(
+                'noSuratJalan' => $this->input->post('noSurat'),
                 'noPemesanan' => $this->input->post('noPemesanan'),
                 'supplier' => $this->input->post('supplier'),
-                'tanggalPemesanan' => $this->input->post('tgl_pemesanan')
+                'tanggalMasuk' => $this->input->post('tglMasuk'),
+                'total' => $total
             );
-            $this->db->insert('pemesanan_barang', $data);
+            $this->db->insert('barang_masuk', $data);
         } else {
             $json = array();
             $json = array(
 
+                'noSurat' => form_error('noSurat', '<p class="mt-3 text-danger">', '</p>'),
                 'noPemesanan' => form_error('noPemesanan', '<p class="mt-3 text-danger">', '</p>'),
-                'tgl_pemesanan' => form_error('tgl_pemesanan', '<p class="mt-3 text-danger">', '</p>'),
                 'supplier' => form_error('supplier', '<p class="mt-3 text-danger">', '</p>'),
-                'bahan' => form_error('bahan[]', '<p class="mt-3 text-danger">', '</p>'),
-                'jmlPesanan' => form_error('jmlPesanan[]', '<p class="mt-3 text-danger">', '</p>'),
+                'tglMasuk' => form_error('tglMasuk', '<p class="mt-3 text-danger">', '</p>'),
+                'barang' => form_error('barang[]', '<p class="mt-3 text-danger">', '</p>'),
+                'banyak' => form_error('banyak[]', '<p class="mt-3 text-danger">', '</p>'),
+                'rincian' => form_error('rincian[]', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
 
             );

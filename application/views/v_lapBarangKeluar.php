@@ -80,13 +80,13 @@ $this->load->view('parts/header');
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Data Barang Masuk</h3>
+                                <h3>Laporan Barang Keluar</h3>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?= base_url('Dashboard') ?>">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data Barang Masuk
+                                        <li class="breadcrumb-item active" aria-current="page">Laporan Barang Keluar
                                         </li>
                                     </ol>
                                 </nav>
@@ -102,37 +102,48 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <a href="<?= base_url('BarangMasuk/viewTambah') ?>" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Data</span></a>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Tanggal Kirim Awal
+                                            <input type="date" class="form-control"> 
+                                        </div>
+                                        
+                                        <div class="col-sm-4">
+                                            Tanggal Kirim Akhir
+                                           <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-sm-1 py-4">
+                                            <button class="btn btn-success">Search</button>
+                                        </div>
+                                        <div class="col-sm-2 py-4">
+                                            <button class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+                                        </div>
+                                    </div>
+                                </div>
+                               <hr>
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="table-barangMasuk" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>No Surat</th>
-                                                <th>No Pemesanan</th>
+                                                <th>ID Barang Keluar</th>
                                                 <th>Supplier</th>
-                                                <th>Tanggal Masuk</th>
-                                                <th>Total</th>
-                                                <th>Tools</th>
-
+                                                <th>Tanggal Kirim</th>
+                                                <th>Grand Total</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($barangMasuk as $data) { ?>
+                                            foreach ($barangKeluar as $data) { ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= $data['noSuratJalan'] ?></td>
-                                                    <td><?= $data['noPemesanan'] ?></td>
+                                                    <td><?= $data['id_barangKeluar'] ?></td>
                                                     <td><?= $data['supplier'] ?></td>
-                                                    <td><?= $data['tanggalMasuk'] ?></td>
-                                                    <td><?= $data['total'] ?></td>
-                                                    <td class="text-center">
-                                                        <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="<?= base_url('BarangMasuk/detailBarangMasuk/' . $data['noSuratJalan']) ?>" class="btn btn-primary btn-detail"><i class="fa fa-eye"></i></a>
-                                                    </td>
+                                                    <td><?= $data['tanggalKirim'] ?></td>
+                                                    <td><?= $data['grandTotal'] ?></td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -144,7 +155,6 @@ $this->load->view('parts/header');
                 </section>
             </div>
 
-          
             <!-- modal tambah -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -231,196 +241,7 @@ $this->load->view('parts/header');
         <script>
             $(document).ready(function() {
                 var status;
-                $('#table-barangMasuk').DataTable({
-                    dom: 'Blfrtip',
-                    buttons: [{
-                            extend: 'copy',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'excel',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'csv',
-                            className: 'btn btn-primary'
-                        },
-                        {
-                            extend: 'pdf',
-                            className: 'btn btn-primary'
-                        },
-                    ],
-                });
-
-                $('#form-NamaPegawai').on('submit', function(e) {
-                    e.preventDefault();
-                    $('#tambah').modal('hide');
-                    Swal.fire({
-                        title: "Apakah anda yakin?",
-                        text: "Anda akan mengakses data yang dicari",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-primary",
-                        confirmButtonText: "Yes",
-                        cancelButtonText: "No",
-                        closeOnConfirm: false,
-                        closeOnCancel: false,
-
-                    }).then(result => {
-                        if (result.value == true) {
-
-
-                            // console.log(value.value);
-
-
-
-                            $('#tambah').modal('hide');
-
-
-                            var fd;
-                            var files;
-                            var URL;
-                            if ($('#btn-save').val() == 'Save') {
-                                URL = "<?php echo site_url('Pegawai/addPegawai'); ?>";
-
-                            } else {
-                                var id = $('#id_pegawai').val();
-                                URL = "<?php echo site_url() ?>Pegawai/editPegawai/" + id;
-                            }
-
-                            Swal.fire({
-                                title: 'Sedang Proses',
-                                text: 'Tunggu Sebentar...',
-                                timer: 1000,
-                                showConfirmButton: false,
-                                onOpen: () => {
-                                    Swal.showLoading()
-                                }
-                            }).then(
-                                function() {
-                                    $.ajax({
-                                        ///nambah url
-                                        url: URL,
-                                        method: "POST",
-                                        data: $('#form-NamaPegawai').serializeArray(),
-                                        success: function(data) {
-
-                                            var status = false;
-                                            if (data.status == 'invalid') {
-                                                swal.showLoading();
-                                                $.each(data, function(key, value) {
-                                                    //alert(value);
-                                                    $('#' + key).parents('.form-group').find('.error').html(value);
-
-                                                });
-                                                fstatus = '';
-                                                Swal.fire({
-                                                    title: "Failed",
-                                                    text: "Data gagal dimasukan!",
-                                                    type: "error",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                }).then(function() {
-                                                    $('#tambah').modal('show');
-                                                })
-
-                                            } else {
-
-                                                Swal.fire({
-                                                    title: "Success",
-                                                    text: "Data berhasil dimasukan!",
-                                                    type: "success",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                }).then(function() {
-                                                    location.reload();
-                                                })
-                                                // function() {
-                                                //     location.reload();
-                                                // }
-
-                                            }
-                                        }
-                                    });
-
-                                },
-                                // handling the promise rejection
-                                function(dismiss) {
-                                    if (dismiss === 'timer') {
-                                        console.log('I was closed by the timer')
-                                    }
-                                }
-                            )
-                        } else {
-                            Swal.fire(
-                                'Cancelled',
-                                '',
-                                'error'
-                            )
-                        }
-
-                    });
-                });
-
-                $("#table-barangMasuk").on('click', '.btn-edit', function() {
-                    // get the current row
-                    $('.error').html('');
-                    fstatus = 'update';
-                    $('#btn-save').val('Update');
-                    var currentRow = $(this).closest("tr");
-                    var IdPegawai = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-                    var IdJabatan = currentRow.find("td:eq(2)").text();
-                    var namaPegawai = currentRow.find("td:eq(3)").text();
-                    var alamat = currentRow.find("td:eq(4)").text();
-                    var tglLahir = currentRow.find("td:eq(5)").text();
-                    var nomorTelp = currentRow.find("td:eq(6)").text();
-
-                    $('#tambah').modal('show');
-                    $('#id_pegawai').val(IdPegawai);
-                    $('#id_jabatan').val(IdJabatan);
-                    $('#NamaPegawai').val(namaPegawai);
-                    $('#alamatPegawai').val(alamat);
-                    $('#tgl_lahir').val(tglLahir);
-                    $('#nomorTelp').val(nomorTelp);
-
-                });
-
-                $("#table-barangMasuk").on('click', '.btn-delete', function() {
-                    // get the current row
-
-
-                    var currentRow = $(this).closest("tr");
-                    var id = currentRow.find("td:eq(1)").text(); // get id jenis
-
-                    Swal.fire({
-                            title: "Apakah anda yakin?",
-                            text: "Anda akan mengakses data yang dicari",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonClass: "btn-primary",
-                            confirmButtonText: "Yes",
-                            cancelButtonText: "No",
-                            closeOnConfirm: false,
-                            closeOnCancel: false
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-
-                                var url = "<?php echo base_url() ?>Pegawai/hapusPegawai/" + id;
-
-
-                                $.get(url, function() {
-                                    location.reload();
-                                });
-                                swal("Deleted", "Data berhasil dihapus!", "error");
-                            } else {
-                                swal("Cancelled", "Gagal)", "error");
-                            }
-                        });
-                });
-
+                $('#table-barangMasuk').DataTable();
 
             });
         </script>

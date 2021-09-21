@@ -29,10 +29,10 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
-        if (($this->session->userdata('idJabatan') == 1) && ($this->session->userdata('status') == 'login')) {
+        if (($this->session->userdata('idJabatan') == 2) && ($this->session->userdata('status') == 'login')) {
 
             $this->load->view('admin/v_DashboardAdmin');
-        } else if (($this->session->userdata('idJabatan') == 2) && ($this->session->userdata('status') == 'login')) {
+        } else if (($this->session->userdata('idJabatan') == 1) && ($this->session->userdata('status') == 'login')) {
 
             $this->load->view('supervisor/v_DashboardSv');
         } else {

@@ -82,13 +82,13 @@ $this->load->view('parts/header');
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Data Pemesanan</h3>
+                                <h3>Data User</h3>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
                                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="<?= base_url('Dashboard') ?>">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Data Pemesanan
+                                        <li class="breadcrumb-item active" aria-current="page">Data User
                                         </li>
                                     </ol>
                                 </nav>
@@ -104,15 +104,15 @@ $this->load->view('parts/header');
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a>
                             </div> -->
                             <div class="card-body">
-                                <a href="<?= base_url('PemesananBarang/tambahPemesanan') ?>" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pemesanan</span></a>
+                                <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah User</span></a>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-helm" width="100%" cellspacing="0">
+                                    <table class="table table-striped" id="table-bahan" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>No Pemesanan</th>
-                                                <th>Supplier</th>
-                                                <th>Tanggal Pemesanan</th>
+                                                <th>username</th>
+                                                <th>password</th>
+                                                <th>ID Pegawai</th>
                                                 <th>Tools</th>
 
                                             </tr>
@@ -121,16 +121,20 @@ $this->load->view('parts/header');
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($orderBahan as $data) { ?>
+                                            $options = [
+                                                'cost' => 5,
+                                            ];
+                                            foreach ($user as $data) { ?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $data['noPemesanan'] ?></td>
-                                                    <td><?php echo $data['supplier'] ?></td>
-                                                    <td><?php echo $data['tanggalPemesanan'] ?></td>
+                                                    <td><?php echo $data['username'] ?></td>
+                                                    <td style="width: 300px;"><?php echo password_hash($data['password'], PASSWORD_DEFAULT, $options) ?></td>
+                                                    <td><?php echo $data['id_pegawai'] ?></td>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="btn btn-warning btn-edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="<?= base_url('PemesananBarang/detailOrder/'. $data['noPemesanan']) ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+
                                                     </td>
+
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
@@ -142,10 +146,69 @@ $this->load->view('parts/header');
                 </section>
             </div>
 
+            <?php
+            $id = $this->M_Bahan->getKodeBahan();
+            ?>
+            <!-- modal tambah -->
+            <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
+                <div class="modal-dialog modal-sm-4">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Form Tambah User</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="form-bahan">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Username</label>
+                                            <input type="text" name="username" id="username" value="<?php echo $id ?>" class="form-control" required>
+                                            <div class="error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Password</label>
+                                            <input type="text" name="Password" id="Password" class="form-control">
+                                            <div class="error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label class="control-label">ID Pegawai</label>
+                                            <input type="text" name="idPegawai" id="idPegawai" class="form-control">
+                                            <div class="error" style="font-size: medium; width:500px"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 py-4">
+                                        <div class="form-group">
+                                          
+                                            <button class="btn btn-primary">Pilih</button>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                        </div>
 
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btn-ModalInsert" id="btn-save" name="tambah" value="Simpan">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- End of Main Content -->
+
 
         <?php
         $this->load->view('parts/footer');
@@ -153,7 +216,7 @@ $this->load->view('parts/header');
         <script>
             $(document).ready(function() {
                 var status;
-                $('#table-helm').DataTable({
+                $('#table-bahan').DataTable({
                     dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
@@ -175,6 +238,15 @@ $this->load->view('parts/header');
 
                 });
 
+                $('#btn-tambah').click(function() {
+                    $('.error').html('');
+                    $('#form-bahan')[0].reset();
+                    // $('#img').html(`<input type="file" class="form-control" id="image" name="image" value="" placeholder="Add image">
+                    // <?php echo form_error('image'); ?>`);
+                    // // $('#insert_form')[0].reset();
+                    $('#btn-save').val('Save');
+                    $('#tambah').modal('show');
+                });
 
                 $('#form-bahan').on('submit', function(e) {
                     e.preventDefault();
@@ -191,7 +263,12 @@ $this->load->view('parts/header');
                         closeOnCancel: false
                     }).then(function() {
 
+
+
+
                         $('#tambah').modal('hide');
+
+
                         var fd;
                         var files;
                         var URL;
@@ -204,8 +281,8 @@ $this->load->view('parts/header');
                         }
 
                         Swal.fire({
-                            title: 'Auto close alert!',
-                            text: 'I will close in 5 seconds.',
+                            title: 'Sedang Proses',
+                            text: 'Tunggu Sebentar',
                             timer: 2000,
                             showConfirmButton: false,
                             onOpen: () => {
@@ -239,8 +316,6 @@ $this->load->view('parts/header');
                                             }).then(function() {
                                                 $('#tambah').modal('show');
                                             })
-
-
                                         } else {
 
                                             Swal.fire({
@@ -277,7 +352,7 @@ $this->load->view('parts/header');
                     });
                 });
 
-                $("#table-helm").on('click', '.btn-edit', function() {
+                $("#table-bahan").on('click', '.btn-edit', function() {
                     // get the current row
                     $('.error').html('');
                     fstatus = 'update';
@@ -285,16 +360,20 @@ $this->load->view('parts/header');
                     var currentRow = $(this).closest("tr");
                     var kodeBahan = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
                     var namaBahan = currentRow.find("td:eq(2)").text();
-                    var harga = currentRow.find("td:eq(3)").text();
+                    var satuan = currentRow.find("td:eq(3)").text();
+                    var harga = currentRow.find("td:eq(4)").text();
+                    var banyak = currentRow.find("td:eq(5)").text();
 
                     $('#tambah').modal('show');
                     $('#kodeBahan').val(kodeBahan);
                     $('#namaBahan').val(namaBahan);
+                    $('#satuan').val(satuan);
                     $('#harga').val(harga);
+                    $('#banyak').val(banyak);
 
                 });
 
-                $("#table-helm").on('click', '.btn-delete', function() {
+                $("#table-bahan").on('click', '.btn-delete', function() {
                     // get the current row
 
 

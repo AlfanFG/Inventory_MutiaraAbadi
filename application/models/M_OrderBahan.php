@@ -19,6 +19,20 @@ class M_OrderBahan extends CI_Model
         return $id;
     }
 
+    function pemesananById($id){
+        $query = $this->db->query("SELECT * FROM pemesanan_barang WHERE noPemesanan = '$id'");
+        $data = $query->result_array();
+
+        return $data;
+    }
+
+    function getOrderDetail($id){
+        $query = $this->db->query("SELECT b.KodeBahan, b.NamaBahan, b.satuan, dp.jumlahPemesanan, dp.totalPesan FROM detail_pemesanan_bahan AS dp INNER JOIN bahan AS b ON dp.KodeBahan = b.KodeBahan WHERE dp.noPemesanan = '$id'");
+        $data = $query->result_array();
+
+        return $data;
+    }
+
     public function getKodeNamaBarang($term)
     {
         $query = $this->db->query("SELECT NamaBahan, KodeBahan FROM bahan WHERE NamaBahan like '%" . $term . "%' OR KodeBahan like '%" . $term . "%'");

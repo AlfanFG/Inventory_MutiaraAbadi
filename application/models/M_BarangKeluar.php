@@ -1,16 +1,30 @@
 <?php
 
-class M_BarangMasuk extends CI_Model
+class M_BarangKeluar extends CI_Model
 {
-    public function getAllBarangMasuk()
+    public function getAllBarangKeluar()
     {
-        $query = $this->db->query("SELECT bm.noSuratJalan, bm.noPemesanan, p.supplier, bm.tanggalMasuk, bm.total FROM barang_masuk AS bm INNER JOIN pemesanan_barang AS p ON bm.noPemesanan = p.noPemesanan order by bm.noSuratJalan desc");
+        $query = $this->db->query("SELECT * FROM barang_keluar order by id_barangKeluar desc");
         $data = $query->result_array();
 
         return $data;
     }
 
-    function getDetailBarangMasuk($id)
+    public function getNomorBarangKeluar()
+    {
+
+        $date = date('dmy');
+        $query = $this->db->query(
+            "SELECT IFNULL(MAX(SUBSTRING(id_barangKeluar,11)),0)+1 AS no_urut FROM barang_keluar"
+        );
+        $data = $query->row_array();
+        $no_urut = sprintf("%'.04d", $data['no_urut']);
+
+        $id = $date . $no_urut;
+        return $id;
+    }
+
+    function getDetailBarangKeluar($id)
     {
         $query = $this->db->query("SELECT D.kodeBarang, B.NamaBahan, B.satuan, D.banyak, D.rincian, dp.totalPesan, dp.jumlahPemesanan FROM bahan AS B INNER JOIN detail_barang_masuk AS D ON B.KodeBahan = D.kodeBarang INNER JOIN detail_pemesanan_bahan AS dp ON D.kodeBarang = dp.KodeBahan WHERE D.noSuratJalan = '$id'");
         $data = $query->result_array();
@@ -33,6 +47,22 @@ class M_BarangMasuk extends CI_Model
         $data = $query->result_array();
 
         return $data;
+    }
+
+    public function getNoSuratJalan()
+    {
+
+        $date = date('dmy');
+        $query = $this->db->query(
+            "SELECT IFNULL(MAX(SUBSTRING(noSuratJalan,11)),0)+1 AS no_urut FROM barang_masuk"
+        );
+        $data = $query->row_array();
+        $no_urut = sprintf("%'.04d", $data['no_urut']);
+
+        $id = $date . $no_urut;
+
+
+        return $id;
     }
 
     function insertBarangMasuk($data)
