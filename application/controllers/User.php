@@ -37,34 +37,31 @@ class User extends CI_Controller
         $this->load->view('admin/data_master/v_dataUser', $data);
     }
 
-    public function addBahan()
+    public function addUser()
     {
 
-        $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
-        $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
-        $this->form_validation->set_rules('harga', 'Harga Bahan', 'required');
-        $this->form_validation->set_rules('banyak', 'Banyak Bahan', 'required');
-        $this->form_validation->set_rules('satuan', 'Satuan Bahan', 'required');
+        $this->form_validation->set_rules('id_user', 'ID User', 'required');
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('Password', 'Password', 'required');
+        $this->form_validation->set_rules('idPegawai', 'ID Pegawai', 'required');
 
         if ($this->form_validation->run()) {
 
             $data = array(
-                'KodeBahan' => $this->input->post('kodeBahan'),
-                'NamaBahan' => $this->input->post('namaBahan'),
-                'harga' => $this->input->post('harga'),
-                'banyak' => $this->input->post('banyak'),
-                'satuan' => $this->input->post('satuan')
+                'id_user' => $this->input->post('id_user'),
+                'username' => $this->input->post('username'),
+                'Password' => $this->input->post('Password'),
+                'idPegawai' => $this->input->post('idPegawai'),
             );
-            $this->M_Bahan->insertBahan($data);
+            $this->M_Bahan->insertUser($data);
         } else {
             $json = array();
             $json = array(
 
-                'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'harga' => form_error('harga', '<p class="mt-3 text-danger">', '</p>'),
-                'banyak' => form_error('banyak', '<p class="mt-3 text-danger">', '</p>'),
-                'satuan' => form_error('satuan', '<p class="mt-3 text-danger">', '</p>'),
+                'id_user' => form_error('id_user', '<p class="mt-3 text-danger">', '</p>'),
+                'username' => form_error('username', '<p class="mt-3 text-danger">', '</p>'),
+                'Password' => form_error('Password', '<p class="mt-3 text-danger">', '</p>'),
+                'idPegawai' => form_error('idPegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
 
             );
@@ -77,31 +74,28 @@ class User extends CI_Controller
 
     public function editBahan($id)
     {
-        $this->form_validation->set_rules('kodeBahan', 'Kode Bahan', 'required');
-        $this->form_validation->set_rules('namaBahan', 'Nama Bahan', 'required');
-        $this->form_validation->set_rules('harga', 'Harga Bahan', 'required');
-        $this->form_validation->set_rules('banyak', 'Banyak Bahan', 'required');
-        $this->form_validation->set_rules('satuan', 'Satuan Bahan', 'required');
+        $this->form_validation->set_rules('id_user', 'ID User', 'required');
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('Password', 'Password', 'required');
+        $this->form_validation->set_rules('idPegawai', 'ID Pegawai', 'required');
 
 
         if ($this->form_validation->run()) {
             $data = array(
-                'KodeBahan' => $this->input->post('kodeBahan'),
-                'NamaBahan' => $this->input->post('namaBahan'),
-                'harga' => $this->input->post('harga'),
-                'banyak' => $this->input->post('banyak'),
-                'satuan' => $this->input->post('satuan')
+                'id_user' => $this->input->post('id-user'),
+                'username' => $this->input->post('username'),
+                'Password' => $this->input->post('Password'),
+                'idPegawai' => $this->input->post('idPegawai'),
             );
             $this->M_Bahan->updateBahan($data, $id);
         } else {
             $json = array();
             $json = array(
 
-                'kodeBahan' => form_error('kodeBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'namaBahan' => form_error('namaBahan', '<p class="mt-3 text-danger">', '</p>'),
-                'harga' => form_error('harga', '<p class="mt-3 text-danger">', '</p>'),
-                'banyak' => form_error('banyak', '<p class="mt-3 text-danger">', '</p>'),
-                'satuan' => form_error('satuan', '<p class="mt-3 text-danger">', '</p>'),
+                'id_user' => form_error('id_user', '<p class="mt-3 text-danger">', '</p>'),
+                'username' => form_error('username', '<p class="mt-3 text-danger">', '</p>'),
+                'Password' => form_error('Password', '<p class="mt-3 text-danger">', '</p>'),
+                'idPegawai' => form_error('idPegawai', '<p class="mt-3 text-danger">', '</p>'),
                 'status' => 'invalid'
 
             );

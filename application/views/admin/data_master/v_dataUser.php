@@ -106,7 +106,7 @@ $this->load->view('parts/header');
                             <div class="card-body">
                                 <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah User</span></a>
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="table-bahan" width="100%" cellspacing="0">
+                                    <table class="table table-striped" id="table-user" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
@@ -146,9 +146,7 @@ $this->load->view('parts/header');
                 </section>
             </div>
 
-            <?php
-            $id = $this->M_Bahan->getKodeBahan();
-            ?>
+            <?php $pegawai = $this->M_Pegawai->getAllPegawai(); ?>
             <!-- modal tambah -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="databarang" aria-hidden="true">
                 <div class="modal-dialog modal-sm-4">
@@ -160,12 +158,12 @@ $this->load->view('parts/header');
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" id="form-bahan">
+                            <form method="post" id="form-user">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Username</label>
-                                            <input type="text" name="username" id="username" value="<?php echo $id ?>" class="form-control" required>
+                                            <input type="text" name="username" id="username" class="form-control" required>
                                             <div class="error"></div>
                                         </div>
                                     </div>
@@ -183,15 +181,12 @@ $this->load->view('parts/header');
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label class="control-label">ID Pegawai</label>
-                                            <input type="text" name="idPegawai" id="idPegawai" class="form-control">
+                                            <select type="text" name="idPegawai" id="idPegawai" class="form-control">
+                                                <?php foreach ($pegawai as $data) {?>
+                                                <option value="<?php echo $data['id_pegawai'] ?>"><?php echo $data['NamaPegawai']?></option>
+                                                <?php } ?>
+                                            </select>
                                             <div class="error" style="font-size: medium; width:500px"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 py-4">
-                                        <div class="form-group">
-                                          
-                                            <button class="btn btn-primary">Pilih</button>
-                                           
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +211,7 @@ $this->load->view('parts/header');
         <script>
             $(document).ready(function() {
                 var status;
-                $('#table-bahan').DataTable({
+                $('#table-user').DataTable({
                     dom: 'Blfrtip',
                     buttons: [{
                             extend: 'copy',
@@ -240,7 +235,7 @@ $this->load->view('parts/header');
 
                 $('#btn-tambah').click(function() {
                     $('.error').html('');
-                    $('#form-bahan')[0].reset();
+                    $('#form-user')[0].reset();
                     // $('#img').html(`<input type="file" class="form-control" id="image" name="image" value="" placeholder="Add image">
                     // <?php echo form_error('image'); ?>`);
                     // // $('#insert_form')[0].reset();
@@ -248,7 +243,7 @@ $this->load->view('parts/header');
                     $('#tambah').modal('show');
                 });
 
-                $('#form-bahan').on('submit', function(e) {
+                $('#form-user').on('submit', function(e) {
                     e.preventDefault();
                     $('#tambah').modal('hide');
                     Swal.fire({
@@ -264,8 +259,6 @@ $this->load->view('parts/header');
                     }).then(function() {
 
 
-
-
                         $('#tambah').modal('hide');
 
 
@@ -273,11 +266,11 @@ $this->load->view('parts/header');
                         var files;
                         var URL;
                         if ($('#btn-save').val() == 'Save') {
-                            URL = "<?php echo site_url('Bahan/addBahan'); ?>";
+                            URL = "<?php echo site_url('User/addUser'); ?>";
 
                         } else {
-                            var id = $('#kodeBahan').val();
-                            URL = "<?php echo site_url() ?>Bahan/editBahan/" + id;
+                            var id = $('#id_user').val();
+                            URL = "<?php echo site_url() ?>User/editUser/" + id;
                         }
 
                         Swal.fire({
@@ -294,7 +287,7 @@ $this->load->view('parts/header');
                                     ///nambah url
                                     url: URL,
                                     method: "POST",
-                                    data: $('#form-bahan').serializeArray(),
+                                    data: $('#form-user').serializeArray(),
                                     success: function(data) {
 
                                         var status = false;
@@ -352,28 +345,26 @@ $this->load->view('parts/header');
                     });
                 });
 
-                $("#table-bahan").on('click', '.btn-edit', function() {
+                $("#table-user").on('click', '.btn-edit', function() {
                     // get the current row
                     $('.error').html('');
                     fstatus = 'update';
                     $('#btn-save').val('Update');
                     var currentRow = $(this).closest("tr");
-                    var kodeBahan = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-                    var namaBahan = currentRow.find("td:eq(2)").text();
-                    var satuan = currentRow.find("td:eq(3)").text();
-                    var harga = currentRow.find("td:eq(4)").text();
-                    var banyak = currentRow.find("td:eq(5)").text();
-
+                    //var ID_User = currentRow.find("td:eq(1)").text(); // get current row 2nd TD
+                    var username = currentRow.find("td:eq(1)").text();
+                    var Password = currentRow.find("td:eq(2)").text();
+                    var idPegawai = currentRow.find("td:eq(3)").text();
+                    
                     $('#tambah').modal('show');
-                    $('#kodeBahan').val(kodeBahan);
-                    $('#namaBahan').val(namaBahan);
-                    $('#satuan').val(satuan);
-                    $('#harga').val(harga);
-                    $('#banyak').val(banyak);
+                    //$('#id_user').val(ID_User);
+                    $('#username').val(username);
+                    $('#Password').val(Password);
+                    $('#idPegawai').val(idPegawai);
 
                 });
 
-                $("#table-bahan").on('click', '.btn-delete', function() {
+                $("#table-user").on('click', '.btn-delete', function() {
                     // get the current row
 
 
