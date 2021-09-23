@@ -7,7 +7,8 @@ class M_Helm extends CI_Model
         return $this->db->get('helm')->result_array();
     }
 
-    public function getHelmByKode($kode){
+    public function getHelmByKode($kode)
+    {
         $query = $this->db->query("SELECT * FROM detail_helm WHERE kodeHelm = '$kode'");
         $data = $query->result();
 

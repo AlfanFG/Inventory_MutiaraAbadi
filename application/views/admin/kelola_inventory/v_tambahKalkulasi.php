@@ -102,27 +102,26 @@ $this->load->view('parts/header');
                                 <!-- <h6 class="m-0 font-weight-bold text-primary">Data Pegawai </h6>
                                 <a href="#" style="margin-left:900px" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" id="btn-tambah"><i class="fas fa-plus-square "></i> <span style="margin-left: 5px;">Tambah Pegawai</span></a> -->
                             </div>
-                            
+
                             <div class="card-body">
                                 <form id="form-tambah" method="POST" enctype="multipart/form-data" style="margin-top: 40px">
                                     <!-- <a href="#" class="btn btn-primary shadow-sm" id="btn-tambah" style="width:200px !important; margin-left: 650px; position: relative; top:40px"><i class="fa fa-plus-square"></i> <span style="margin-left: 5px; ">Tambah Pegawai</span></a> -->
-                   
-                                  
-                                    <div class="row">
-                                            <div class="col-sm-3">
-                                                <label for="roundText">Pilih Helm</label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" id="helm" name="helm" class="form-control round helm" placeholder="Pilih Data Helm">
-                                                    <div class="error"></div>
-                                                </div>
-                                                
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button type="button" class="btn btn-success" id="btn-pilih-helm" style="width: 100%;">Pilih</button>
+                                    <div class="row helm">
+
+                                        <div class="col-sm-3">
+                                            <label for="roundText">Helm</label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" id="helm" name="helm" class="form-control round" placeholder="Pilih Data Helm">
+                                                <div class="error"></div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4">
+                                            <button type="button" style="display: inline;" class="btn btn-success" id="btn-pilih-helm">Pilih</button>
+                                            <button type="button" style="display: inline;" class="btn btn-outline-dark" id="btn-lihat">Lihat</button>
+                                        </div>
+                                    </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-sm-3">
                                             <label for="roundText">Jumlah Produksi</label>
@@ -132,25 +131,12 @@ $this->load->view('parts/header');
                                                 <input type="text" id="jmlProd" name="jmlProd" class="form-control round jmlProd" placeholder="Masukan Jumlah Produksi">
                                                 <div class="error"></div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-top: 20px;">
-                                        <div class="col-sm-3">
-                                            <label for="roundText">Jumlah Yard</label>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <div class="form-group">
-                                                <input type="date" id="jmlYard" name="jmlYard" class="form-control round jmlYard">
-                                                <div class="error"></div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    
                                     <div class="row" style="margin-top: 100px;">
                                         <hr>
-                                        <input type="submit" class="btn btn-outline-primary" value="Simpan">
+                                        <input type="submit" class="btn btn-outline-primary" value="submit">
                                     </div>
                                 </form>
                             </div>
@@ -162,182 +148,242 @@ $this->load->view('parts/header');
         <!-- End of Main Content -->
         <?php $helm = $this->M_Helm->getAllHelm(); ?>
         <div class="modal fade text-left" id="modal-table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel17">Pilih Nomor Pemesanan</h4>
-                                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <i class="fas fa-window-close"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                        <div class="table-responsive">
-                                    <table class="table table-striped" id="table-helm" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>No Pemesanan</th>
-                                                <th>Supplier</th>
-                                                <th>Tanggal Pemesanan</th>
-                                                <th>Tools</th>
-                                            </tr>
-                                        </thead>
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel17">Pilih Nomor Pemesanan</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-window-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-helm" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>No Pemesanan</th>
+                                        <th>Supplier</th>
+                                        <th>Tanggal Pemesanan</th>
+                                        <th>Tools</th>
+                                    </tr>
+                                </thead>
 
-                                        <tbody>
-                                            <?php
-                                            $no = 1;
-                                            foreach ($helm as $data) { ?>
-                                                <tr>
-                                                    <td><?php echo $no++; ?></td>
-                                                    <td><?php echo $data['kodeHelm'] ?></td>
-                                                    <td><?php echo $data['namaHelm'] ?></td>
-                                                    <td><?php echo $data['total'] ?></td>
-                                                    <td class="text-center">
-                                                    <a href="javascript:;" class="btn btn-outline-secondary btn-pilih" data-kodehelm="<?php echo $data['kodeHelm'] ?>">Pilih</a>
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($helm as $data) { ?>
+                                        <tr>
+                                            <td><?php echo $no++; ?></td>
+                                            <td><?php echo $data['kodeHelm'] ?></td>
+                                            <td><?php echo $data['namaHelm'] ?></td>
+                                            <td><?php echo $data['total'] ?></td>
+                                            <td class="text-center">
+                                                <a href="javascript:;" class="btn btn-outline-secondary btn-pilih" data-kodehelm="<?php echo $data['kodeHelm'] ?>">Pilih</a>
 
-                                                    </td>
+                                            </td>
 
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-        
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade text-left" id="modal-table-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel17">Detail Helm</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-window-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-helm" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Kode Bahan</th>
+                                        <th>Bagian Helm</th>
+                                        <th>Harga</th>
+                                        <th>Hasil</th>
+                                        <th>Harga Set</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="field-detail">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <?php
         $this->load->view('parts/footer');
         ?>
         <script>
             $(document).ready(function() {
+                $('#btn-lihat').prop('disabled', true);
                 $('#table-helm').DataTable();
 
-                $('#btn-pilih-helm').click(function(){
-                   
-                    $('#modal-table').modal('show');
-                })
+                $('#btn-pilih-helm').click(function() {
 
-                $('#table-helm').on('click', '.btn-pilih', function(){
+                    $('#modal-table').modal('show');
+                });
+
+                $('#btn-lihat').click(function() {
+
+                    $('#modal-table-detail').modal('show');
+                });
+
+                $('#table-helm').on('click', '.btn-pilih', function() {
+                    $('#btn-lihat').prop('disabled', false);
                     let kodeHelm = $(this).data('kodehelm');
                     $('#helm').val(kodeHelm);
                     $('#modal-table').modal('hide');
-                })
-                
-                   
-                var status;
-                $('#form-tambah').on('submit', function(e) {
-                    e.preventDefault();
-
-                    $('#jumlah').val(i);
-                    var fd = new FormData();
-                    var data = $('#form-tambah').serializeArray();
-
-                    $.each(data, function(key, input) {
-                        fd.append(input.name, input.value);
+                    $.ajax({
+                        url: '<?php echo base_url('') ?>KalkulasiBahan/getHelmByKode/' + kodeHelm,
+                        type: 'GET',
+                        error: function() {
+                            alert('Something is wrong!');
+                        },
+                        success: function(data) {
+                            var value = JSON.parse(data);
+                            let no = 1;
+                            for (var i = 0; i <= value.length - 1; i++) {
+                                $('#field-detail').append(`<tr>
+                                    <td>` + no++ + `</td>
+                                    <td>` + value[i].KodeBahan + `</td>
+                                    <td>` + value[i].bagianHelm + `</td>
+                                    <td>` + value[i].harga + `</td>
+                                    <td>` + value[i].hasil + `</td>
+                                    <td>` + value[i].hargaSet + `</td>
+                                    </tr>`);
+                            }
+                        }
                     });
 
+                })
 
-                    $('#tambah').modal('hide');
-                    Swal.fire({
-                        title: "Apakah anda yakin?",
-                        text: "Anda akan mengakses data yang dicari",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonClass: "btn-primary",
-                        confirmButtonText: "Yes",
-                        cancelButtonText: "No",
-                        closeOnConfirm: false,
-                        closeOnCancel: false,
+                $('#jmlProd').focus(function() {
+                    if ($('#helm').val() == '') {
+                        alert('Pilih helm terlebih dahulu!');
+                        $('#helm').focus();
+                    }
+                })
+                let jmlSatuan = [];
+                $('#jmlProd').change(function() {
+                    kodeHelm = $('#helm').val();
+                    $.ajax({
+                        url: '<?php echo base_url('') ?>KalkulasiBahan/getHelmByKode/' + kodeHelm,
+                        type: 'GET',
+                        error: function() {
+                            alert('Something is wrong!');
+                        },
+                        success: function(data) {
 
-                    }).then(result => {
-                        if (result.value == true) {
-                            // console.log(value.value);
-
-                            Swal.fire({
-                                title: 'Sedang Proses',
-                                text: 'Tunggu Sebentar...',
-                                timer: 1000,
-                                showConfirmButton: false,
-                                onOpen: () => {
-                                    Swal.showLoading()
-                                }
-                            }).then(
-                                function() {
-                                    for (var p of fd) {
-                                        console.log(p);
-                                    }
-                                    $.ajax({
-                                        ///nambah url
-                                        url: "<?php echo site_url('BarangMasuk/addBarangMasuk'); ?>",
-                                        method: "POST",
-                                        data: fd,
-                                        contentType: false,
-                                        processData: false,
-                                        success: function(data) {
-                                          
-                                            var status = false;
-                                            if (data.status == 'invalid') {
-                                                swal.showLoading();
-                                                $.each(data, function(key, value) {
-                                                    //alert(value);
-                                                    $('.' + key).parents('.form-group').find('.error').html(value);
-
-                                                });
-                                                fstatus = '';
-                                                Swal.fire({
-                                                    title: "Failed",
-                                                    text: "Data gagal dimasukan!",
-                                                    type: "error",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                })
-                                            } else {
-
-                                                Swal.fire({
-                                                    title: "Success",
-                                                    text: "Data berhasil dimasukan!",
-                                                    type: "success",
-                                                    confirmButtonClass: "btn-primary",
-                                                    confirmButtonText: "Oke",
-                                                    closeOnConfirm: true
-                                                }).then(function() {
-                                                    window.location.href = "<?php echo base_url(); ?>BarangMasuk";
-
-                                                })
-                                                // function() {
-                                                //     location.reload();
-                                                // }
-
-                                            }
-                                        }
-                                    });
-
-                                },
-                                // handling the promise rejection
-                                function(dismiss) {
-                                    if (dismiss === 'timer') {
-                                        console.log('I was closed by the timer')
-                                    }
-                                }
-                            )
-                        } else {
-                            Swal.fire(
-                                'Cancelled',
-                                '',
-                                'error'
-                            )
+                            let jmlProd = $('#jmlProd').val();
+                            var value = JSON.parse(data);
+                            for (var i = 0; i <= value.length - 1; i++) {
+                                jmlSatuan[i] = jmlProd / value[i].hasil;
+                            }
                         }
-
                     });
                 });
 
+                $('#form-tambah').on('submit', function(e) {
+                    e.preventDefault();
+                    let helm = $('#helm').val().toString();
+                    let jmlProd = $('#jmlProd').val();
+                    var fd = new FormData(this);
+                    fd.append('jmlSatuan', jmlSatuan);
+
+                    //     // Swal.fire({
+                    //     //     title: "Apakah anda yakin?",
+                    //     //     text: "Anda akan mengakses data yang dicari",
+                    //     //     type: "warning",
+                    //     //     showCancelButton: true,
+                    //     //     confirmButtonClass: "btn-primary",
+                    //     //     confirmButtonText: "Yes",
+                    //     //     cancelButtonText: "No",
+                    //     //     closeOnConfirm: false,
+                    //     //     closeOnCancel: false,
+
+                    //     // }).then(result => {
+                    //     //     if (result.value == true) {
+
+
+                    //     //         Swal.fire({
+                    //     //             title: 'Sedang Proses',
+                    //     //             text: 'Tunggu Sebentar...',
+                    //     //             timer: 1000,
+                    //     //             showConfirmButton: false,
+                    //     //             onOpen: () => {
+                    //     //                 Swal.showLoading()
+                    //     //             }
+                    //     //         }).then(
+                    //     //             function() {
+                    $.ajax({
+                        ///nambah url
+                        url: "<?php echo site_url('KalkulasiBahan/addKalkulasi'); ?>",
+                        type: "POST",
+                        data: {
+                            helm: helm,
+                            jmlProd: jmlProd,
+                            jmlSatuan: jmlSatuan
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+
+                            // Swal.fire({
+                            //     title: "Success",
+                            //     text: "Data berhasil dimasukan!",
+                            //     type: "success",
+                            //     confirmButtonClass: "btn-primary",
+                            //     confirmButtonText: "Oke",
+                            //     closeOnConfirm: true
+                            // }).then(function() {
+                            //     window.location.href = "<?php echo base_url(); ?>KalkulasiBahan";
+                            // })
+                        }
+                    });
+
+                    //                 },
+                    //                 // handling the promise rejection
+                    //                 function(dismiss) {
+                    //                     if (dismiss === 'timer') {
+                    //                         console.log('I was closed by the timer')
+                    //                     }
+                    //                 }
+                    //             )
+                    //         } else {
+                    //             Swal.fire(
+                    //                 'Cancelled',
+                    //                 '',
+                    //                 'error'
+                    //             )
+                    //         }
+
+                    //     });
+                    // });
+
+                });
             });
         </script>
 </body>

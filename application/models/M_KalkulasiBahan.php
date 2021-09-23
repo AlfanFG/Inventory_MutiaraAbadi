@@ -40,7 +40,7 @@ class M_KalkulasiBahan extends CI_Model
         return $data;
     }
 
-   
+
     public function getBarangMasukById($id)
     {
         $query = $this->db->query("SELECT bm.noSuratJalan, bm.noPemesanan, p.supplier, bm.tanggalMasuk, bm.total, dp.jumlahPemesanan, dp.totalPesan FROM barang_masuk AS bm INNER JOIN pemesanan_barang AS p ON bm.noPemesanan = p.noPemesanan INNER JOIN detail_pemesanan_bahan AS dp ON p.noPemesanan = dp.noPemesanan WHERE bm.noSuratJalan = '$id'");
@@ -49,30 +49,15 @@ class M_KalkulasiBahan extends CI_Model
         return $data;
     }
 
-    public function getNoSuratJalan()
-    {
-
-        $date = date('dmy');
-        $query = $this->db->query(
-            "SELECT IFNULL(MAX(SUBSTRING(noSuratJalan,11)),0)+1 AS no_urut FROM barang_masuk"
-        );
-        $data = $query->row_array();
-        $no_urut = sprintf("%'.04d", $data['no_urut']);
-
-        $id = $date . $no_urut;
-
-
-        return $id;
-    }
 
     function insertBarangMasuk($data)
     {
         $this->db->insert('detail_barang_masuk', $data);
     }
 
-    function insertSuratJalan($data)
+    function insertKalkulasi($data)
     {
-        $this->db->insert('barang_masuk', $data);
+        $this->db->insert('perhitungan_produksi', $data);
     }
 
     function updateBarangMasuk($data, $id)

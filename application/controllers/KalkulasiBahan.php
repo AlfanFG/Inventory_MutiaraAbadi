@@ -19,7 +19,7 @@ class KalkulasiBahan extends CI_Controller
     public function index()
     {
         $data['perhitungan'] = $this->M_KalkulasiBahan->getAllKalkulasi();
-        
+
         $this->load->view('admin/kelola_inventory/v_kalkulasiBahan', $data);
         // if ($this->session->userdata('hakAkses') == '1' && $this->session->userdata('status') == 'login') {
         //     redirect('Login');
@@ -31,7 +31,7 @@ class KalkulasiBahan extends CI_Controller
         // }
     }
 
-   
+
 
     public function viewTambah()
     {
@@ -48,72 +48,27 @@ class KalkulasiBahan extends CI_Controller
 
     public function getHelmByKode($kode)
     {
-        $data = $this->M_Helm->getSatuan($kode);
+        $data = $this->M_Helm->getHelmByKode($kode);
         echo json_encode($data);
-        
     }
 
-    public function addBarangMasuk()
+    public function addKalkulasi()
     {
-        $this->form_validation->set_rules('noSurat', 'No. Surat', 'required');
-        $this->form_validation->set_rules('noPemesanan', 'No. Pemesanan', 'required');
-        $this->form_validation->set_rules('supplier', 'ID Jabatan', 'required');
-        $this->form_validation->set_rules('tglMasuk', 'Tanggal Masuk', 'required');
-        $this->form_validation->set_rules('barang[]', 'Barang', 'required');
-        $this->form_validation->set_rules('banyak[]', 'Banyak', 'required');
-        $this->form_validation->set_rules('rincian[]', 'Rincian', 'required');
-      
-        if ($this->form_validation->run()) {
-            $jumlah = $this->input->post('jumlah');
-
-            $total = 0;
-            for ($i = 0; $i < $jumlah; $i++) {
-                $namaKode = $this->input->post('barang')[$i];
-                $namaBarang = substr($namaKode, 10);
-                $namaKodeBarang = substr($namaKode, 1, 5);
-                $rincian = $this->input->post('rincian')[$i];
-
-                $clean = preg_replace('/\D/', '', $rincian);
-
-                $dataBarang = array(
-                    'noSuratJalan' => $this->input->post('noSurat'),
-                    'noPemesanan' => $this->input->post('noPemesanan'),
-                    'KodeBarang' => $namaKodeBarang,
-                    'NamaBarang' => $namaBarang,
-                    'banyak' => $this->input->post('banyak')[$i],
-                    'rincian' => (int)$clean
-                );
-
-                $total += (int)$clean;
-                $this->M_BarangMasuk->insertBarangMasuk($dataBarang);
-            }
-            $data = array(
-                'noSuratJalan' => $this->input->post('noSurat'),
-                'noPemesanan' => $this->input->post('noPemesanan'),
-                'supplier' => $this->input->post('supplier'),
-                'tanggalMasuk' => $this->input->post('tglMasuk'),
-                'total' => $total
+        // var_dump($_POST);
+        echo $this->input->post('helm'),
+        die();
+        $data = array(
+            'kodeHelm' => $this->input->post('helm'),
+            'jmlProd' => $this->input->post('jmlProd')
+        );
+        $this->M_KalkulasiBahan->insertKalkulasi($data);
+        $jmlSatuan[] = $this->input->post('jmlSatuan');
+        for ($i = 0; $i <= sizeof($jmlSatuan) - 1; $i++) {
+            $detail_data = array(
+                'kodeHelm' => $this->input->post('helm'),
+                'jmlSatuan' => $jmlSatuan[$i]
             );
-            $this->db->insert('barang_masuk', $data);
-        } else {
-            $json = array();
-            $json = array(
-
-                'noSurat' => form_error('noSurat', '<p class="mt-3 text-danger">', '</p>'),
-                'noPemesanan' => form_error('noPemesanan', '<p class="mt-3 text-danger">', '</p>'),
-                'supplier' => form_error('supplier', '<p class="mt-3 text-danger">', '</p>'),
-                'tglMasuk' => form_error('tglMasuk', '<p class="mt-3 text-danger">', '</p>'),
-                'barang' => form_error('barang[]', '<p class="mt-3 text-danger">', '</p>'),
-                'banyak' => form_error('banyak[]', '<p class="mt-3 text-danger">', '</p>'),
-                'rincian' => form_error('rincian[]', '<p class="mt-3 text-danger">', '</p>'),
-                'status' => 'invalid'
-
-            );
-
-            // print_r(array_merge($json, $json2, $json3));
-            $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($json));
+            $this->db->insert('detail_perhitungan_produksi', $detail_data);
         }
     }
 
